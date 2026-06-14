@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "AIcon — 10× your business with AI",
-    "description": "AI consulting for marketing, sales, ops and HR. We spot your problems early, solve them with AI, and make you 10× faster and sharper."
+    "title": "AIcon — Same team. 10× the output.",
+    "description": "AI consulting for marketing, sales, ops and HR. We spot your problems before you do, then solve them with AI."
   },
   "nav": {
     "stats": "Problem",
@@ -12,34 +12,29 @@
   },
   "hero": {
     "kicker": "AIcon · AI consulting",
-    "title": "10× your",
-    "titleHighlight": "business",
-    "subtitle": "We spot your problems before you do, then solve them with AI. Up to 10× less time, less cost, more accuracy.",
-    "cta": "Start the conversation",
+    "title": "Same team.",
+    "titleHighlight": "10× the output.",
+    "subtitle": "We spot your problems before you do — then solve them with AI. Faster, sharper, leaner.",
+    "cta": "Let's talk",
     "scrollCue": "Scroll"
   },
   "crisis": {
     "kicker": "Market reality",
-    "title": "95% of AI projects fail.",
-    "body": "Companies spend billions on AI, but most pilots never ship. The problem isn't the model — it's not knowing where and how to deploy AI.",
+    "title": "95% of AI projects never ship.",
+    "body": "Companies pour billions into AI, yet most pilots stay in slide decks. The problem isn't the model — it's not knowing where and how to deploy it.",
     "source": "MIT NANDA · GenAI Divide"
-  },
-  "reasoning": {
-    "kicker": "// reasoning",
-    "title": "The model thinks. We act.",
-    "body": "Every vertical → one agent, one playbook, one KPI. No demo, no prompt-shop."
   },
   "verticals": {
     "kicker": "Where we operate",
-    "title": "4 places AI actually moves the needle",
+    "title": "Four places AI actually moves the needle.",
     "items": [
       {
         "name": "Marketing",
         "metric": "8 hrs → 40 min",
-        "body": "Content production, personalization, customer behavior analytics, campaign optimization."
+        "body": "Content production, audience personalization, customer behavior analytics, campaign optimization."
       },
       {
-        "name": "Sales Funnel",
+        "name": "Sales",
         "metric": "2× conversion",
         "body": "Lead scoring, outreach automation, CRM enrichment, call analysis."
       },
@@ -51,13 +46,18 @@
       {
         "name": "Human Resources",
         "metric": "5× hiring speed",
-        "body": "Screening, onboarding, performance analytics, L&D personalization."
+        "body": "Screening, onboarding, performance analytics, personalized L&D."
       }
     ]
   },
+  "reasoning": {
+    "kicker": "// reasoning",
+    "title": "The model thinks. We ship.",
+    "body": "Every vertical gets one agent, one playbook, one KPI. No demos. No prompt shops."
+  },
   "outcome": {
     "kicker": "Outcome",
-    "title": "Up to 10× faster, sharper, leaner",
+    "title": "Up to 10× faster. 10× sharper. On a leaner team.",
     "items": [
       { "value": "10×", "label": "less time per process" },
       { "value": "5×", "label": "sharper decisions" },
@@ -67,24 +67,24 @@
   },
   "method": {
     "kicker": "Our method",
-    "title": "From diagnosis to deployment, in 90 days",
+    "title": "From audit to production — 90 days.",
     "steps": [
       { "n": "01", "title": "Audit", "body": "We map your workflows, data, and gaps. We find problems before you do." },
-      { "n": "02", "title": "Blueprint", "body": "One AI solution per problem. ROI and timeline before we touch a thing." },
-      { "n": "03", "title": "Build", "body": "Implementation with your team. Data plumbing, agents, integrations." },
-      { "n": "04", "title": "Operate", "body": "Monthly retainer to maintain, iterate, scale — for as long as you want." }
+      { "n": "02", "title": "Blueprint", "body": "One solution per problem. ROI and timeline on paper — before we touch anything." },
+      { "n": "03", "title": "Build", "body": "Implementation, with your team. Data plumbing, agents, integrations." },
+      { "n": "04", "title": "Operate", "body": "Monthly retainer to maintain, iterate, scale — for as long as you need." }
     ]
   },
   "proof": {
     "kicker": "Our story",
     "title": "We tested it on ourselves first.",
-    "body": "Our team automated 90% of its internal processes with AI. Now we transfer the same playbook to yours."
+    "body": "Our team automated 90% of its internal processes with AI. Now we bring the same playbook to yours."
   },
   "cta": {
     "kicker": "Next step",
     "title": "Let's find where AI fits in your business.",
-    "body": "Book a free 30-minute audit. Get an ROI estimate and an initial roadmap.",
-    "button": "Book free audit",
+    "body": "Free 30-minute audit. You walk out with an ROI estimate and an initial roadmap.",
+    "button": "Book a free audit",
     "email": "hello@aicon.dev"
   },
   "footer": {
