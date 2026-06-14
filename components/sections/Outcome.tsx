@@ -5,8 +5,9 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MaskedText } from "@/components/primitives/MaskedText";
+import { CharSplit } from "@/components/primitives/CharSplit";
+import { ChronoRing } from "@/components/primitives/ChronoRing";
 
-/** "The Outcome Stage" — 4 big metrics. */
 export function Outcome() {
   const t = useTranslations("outcome");
   const items = t.raw("items") as { value: string; label: string }[];
@@ -46,20 +47,36 @@ export function Outcome() {
           <MaskedText text={t("title")} />
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px" style={{ background: "color-mix(in srgb, var(--fg) 8%, transparent)" }}>
+        <div
+          className="grid grid-cols-2 md:grid-cols-4 gap-px"
+          style={{ background: "color-mix(in srgb, var(--fg) 8%, transparent)" }}
+        >
           {items.map((it, i) => (
             <div
               key={i}
-              className="metric-cell p-8 md:p-12"
+              className="metric-cell p-8 md:p-12 relative"
               style={{ background: "var(--bg)" }}
             >
+              {/* chrono ring sits top-right, ticks in on enter */}
+              <div
+                className="absolute top-6 right-6"
+                style={{ color: "var(--accent)" }}
+              >
+                <ChronoRing size={28} strokeWidth={1.5} duration={1500} delay={i * 200 + 300} />
+              </div>
+
+              {/* char-split metric value */}
               <div
                 className="text-[clamp(3.5rem,8vw,7rem)] leading-none font-medium tracking-tighter nums-en"
                 style={{ color: "var(--accent)" }}
               >
-                {it.value}
+                <CharSplit text={it.value} stagger={0.05} duration={1.1} />
               </div>
-              <p className="mt-6 text-sm md:text-base leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+
+              <p
+                className="mt-6 text-sm md:text-base leading-relaxed"
+                style={{ color: "var(--fg-muted)" }}
+              >
                 {it.label}
               </p>
             </div>

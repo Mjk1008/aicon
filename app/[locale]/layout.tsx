@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { GradientBlobs } from "@/components/primitives/GradientBlobs";
 import { ThemeArc } from "@/components/primitives/ThemeArc";
+import { Cursor } from "@/components/primitives/Cursor";
 import "../globals.css";
 
 const inter = Inter({
@@ -84,6 +85,7 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
     >
       <body data-theme="arrival">
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <Cursor />
           <GradientBlobs />
           <ThemeArc />
           <SmoothScroll>{props.children}</SmoothScroll>

@@ -30,12 +30,27 @@ function Core() {
 
   useFrame((s) => {
     const t = s.clock.getElapsedTime();
+    // read global scroll signals
+    const root = typeof document !== "undefined" ? document.documentElement : null;
+    const cs = root ? getComputedStyle(root) : null;
+    const sp = cs ? parseFloat(cs.getPropertyValue("--scroll-progress")) || 0 : 0;
+    const vel = cs ? parseFloat(cs.getPropertyValue("--scroll-vel")) || 0 : 0;
+    const mxRaw = cs ? parseFloat(cs.getPropertyValue("--mx")) || 0 : 0;
+    const myRaw = cs ? parseFloat(cs.getPropertyValue("--my")) || 0 : 0;
+
     if (groupRef.current) {
-      groupRef.current.rotation.y = t * 0.18;
-      groupRef.current.rotation.x = Math.sin(t * 0.25) * 0.08;
+      // scroll progress drifts orientation; mouse adds gentle parallax tilt
+      groupRef.current.rotation.y = t * 0.18 + mxRaw * 0.25;
+      groupRef.current.rotation.x = Math.sin(t * 0.25) * 0.08 - myRaw * 0.18;
+      // velocity-aware scale pulse — fast scroll = the core breathes outward
+      const wobble = 1 + Math.min(vel, 1) * 0.12;
+      // gentle scroll-bound scale-down so it doesn't dominate later sections
+      const target = wobble * (1 - sp * 0.18);
+      groupRef.current.scale.lerp({ x: target, y: target, z: target } as THREE.Vector3, 0.08);
     }
     if (ringRef.current) {
-      ringRef.current.rotation.z = -t * 0.25;
+      // velocity makes the ring spin faster
+      ringRef.current.rotation.z = -t * (0.25 + vel * 0.6);
       ringRef.current.rotation.y = t * 0.1;
     }
     if (innerRef.current) {
@@ -43,8 +58,8 @@ function Core() {
       innerRef.current.rotation.z = t * 0.3;
     }
     if (centerRef.current) {
-      // gentle scale pulse
-      const s2 = 1 + Math.sin(t * 1.6) * 0.06;
+      // pulse driven by clock + velocity
+      const s2 = 1 + Math.sin(t * 1.6) * 0.06 + Math.min(vel, 1) * 0.15;
       centerRef.current.scale.set(s2, s2, s2);
     }
   });
