@@ -1,98 +1,95 @@
 {
   "meta": {
-    "title": "AIcon — 10x your business with AI",
-    "description": "AIcon delivers data foundation + change management + AI implementation for teams that want to operate 10x faster, sharper, and leaner."
+    "title": "AIcon — 10× your business with AI",
+    "description": "AI consulting for marketing, sales, ops and HR. We spot your problems early, solve them with AI, and make you 10× faster and sharper."
   },
   "nav": {
+    "stats": "Problem",
     "method": "Method",
-    "stats": "Stats",
     "process": "Process",
     "contact": "Contact",
     "cta": "Talk to us"
   },
   "hero": {
-    "kicker": "AIcon · AI infrastructure for businesses",
-    "title": "AI-ify your",
+    "kicker": "AIcon · AI consulting",
+    "title": "10× your",
     "titleHighlight": "business",
-    "subtitle": "We make teams 10× faster, sharper, and leaner with AI — through data foundation, vertical playbooks, and change management.",
+    "subtitle": "We spot your problems before you do, then solve them with AI. Up to 10× less time, less cost, more accuracy.",
     "cta": "Start the conversation",
     "scrollCue": "Scroll"
   },
   "crisis": {
-    "kicker": "Market reality 2026",
-    "title": "95% of AI pilots fail.",
-    "body": "Companies spend ~$35B/year on GenAI, yet according to MIT NANDA research, 95% of pilots show no measurable P&L impact. The problem isn't the model — it's data foundation, process, and change management.",
-    "source": "Source: MIT NANDA · GenAI Divide (n=300+ initiatives)"
+    "kicker": "Market reality",
+    "title": "95% of AI projects fail.",
+    "body": "Companies spend billions on AI, but most pilots never ship. The problem isn't the model — it's not knowing where and how to deploy AI.",
+    "source": "MIT NANDA · GenAI Divide"
   },
-  "stats": {
-    "kicker": "Industry stats 2025–2026",
-    "title": "The gap between having AI and profiting from AI",
+  "reasoning": {
+    "kicker": "// reasoning",
+    "title": "The model thinks. We act.",
+    "body": "Every vertical → one agent, one playbook, one KPI. No demo, no prompt-shop."
+  },
+  "verticals": {
+    "kicker": "Where we operate",
+    "title": "4 places AI actually moves the needle",
     "items": [
       {
-        "value": "88%",
-        "label": "of organizations deploy AI in at least one function",
-        "source": "McKinsey State of AI 2025 (n=1,993)"
+        "name": "Marketing",
+        "metric": "8 hrs → 40 min",
+        "body": "Content production, personalization, customer behavior analytics, campaign optimization."
       },
       {
-        "value": "6%",
-        "label": "are recognized as AI High Performers",
-        "source": "McKinsey State of AI 2025"
+        "name": "Sales Funnel",
+        "metric": "2× conversion",
+        "body": "Lead scoring, outreach automation, CRM enrichment, call analysis."
       },
       {
-        "value": "42%",
-        "label": "of companies abandoned most AI initiatives in 2025 (up from 17% in 2024)",
-        "source": "S&P Global VotE AI&ML 2025 (n=1,006)"
+        "name": "Operations",
+        "metric": "70% less manual work",
+        "body": "Process automation, document processing, quality control, predictive maintenance."
       },
       {
-        "value": "95%",
-        "label": "of GenAI pilots produce no measurable P&L impact",
-        "source": "MIT NANDA GenAI Divide"
+        "name": "Human Resources",
+        "metric": "5× hiring speed",
+        "body": "Screening, onboarding, performance analytics, L&D personalization."
       }
     ]
   },
-  "pillars": {
-    "kicker": "The AIcon method",
-    "title": "Three pillars of AI transition",
+  "outcome": {
+    "kicker": "Outcome",
+    "title": "Up to 10× faster, sharper, leaner",
     "items": [
-      {
-        "title": "Data Foundation",
-        "body": "91% of organizations say data foundation is essential for AI; only 55% have one. We close that gap — schema, quality, pipelines, RAG-ready."
-      },
-      {
-        "title": "Vertical Implementation",
-        "body": "Ready playbooks for customer support, sales ops, marketing, and internal automation. Not a cheap prompt-shop — production-grade agents with proper data wiring."
-      },
-      {
-        "title": "Change Management",
-        "body": "Team enablement, KPI definition, measurement framework, and adoption ramp. AI without change management = 95% pilot failure."
-      }
+      { "value": "10×", "label": "less time per process" },
+      { "value": "5×", "label": "sharper decisions" },
+      { "value": "70%", "label": "operating cost saved" },
+      { "value": "3×", "label": "scale without hiring" }
     ]
   },
   "method": {
-    "kicker": "90-day process",
-    "title": "From Audit to Production",
+    "kicker": "Our method",
+    "title": "From diagnosis to deployment, in 90 days",
     "steps": [
-      { "n": "01", "title": "Audit", "body": "2 weeks — map current workflows, data, tooling, and pain points." },
-      { "n": "02", "title": "Blueprint", "body": "2 weeks — solution architecture, playbook selection, ROI projection." },
-      { "n": "03", "title": "Build", "body": "6 weeks — implementation, data plumbing, agent deployment, integration." },
-      { "n": "04", "title": "Operate", "body": "Monthly retainer to maintain, iterate, scale." }
+      { "n": "01", "title": "Audit", "body": "We map your workflows, data, and gaps. We find problems before you do." },
+      { "n": "02", "title": "Blueprint", "body": "One AI solution per problem. ROI and timeline before we touch a thing." },
+      { "n": "03", "title": "Build", "body": "Implementation with your team. Data plumbing, agents, integrations." },
+      { "n": "04", "title": "Operate", "body": "Monthly retainer to maintain, iterate, scale — for as long as you want." }
     ]
   },
   "proof": {
     "kicker": "Our story",
-    "title": "Our own team automated 90% of internal processes with AI.",
-    "body": "We did this for ourselves first — before selling it. Now we transfer those playbooks to your team."
+    "title": "We tested it on ourselves first.",
+    "body": "Our team automated 90% of its internal processes with AI. Now we transfer the same playbook to yours."
   },
   "cta": {
     "kicker": "Next step",
-    "title": "Is your business ready to AI-ify?",
-    "body": "Book a free 30-minute audit. Get ROI projection and an initial roadmap.",
+    "title": "Let's find where AI fits in your business.",
+    "body": "Book a free 30-minute audit. Get an ROI estimate and an initial roadmap.",
     "button": "Book free audit",
     "email": "hello@aicon.dev"
   },
   "footer": {
-    "tagline": "AI infrastructure for businesses",
-    "copyright": "© 2026 AIcon. All rights reserved."
+    "tagline": "AI consulting for businesses",
+    "copyright": "© 2026 AIcon"
   },
   "lang": {
     "switchTo": "فارسی"

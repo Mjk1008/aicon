@@ -5,6 +5,8 @@ import { getMessages, setRequestLocale, getTranslations } from "next-intl/server
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { GradientBlobs } from "@/components/primitives/GradientBlobs";
+import { ThemeArc } from "@/components/primitives/ThemeArc";
 import "../globals.css";
 
 const inter = Inter({
@@ -51,8 +53,10 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
       dir={dir}
       className={`${inter.variable} ${vazirmatn.variable}`}
     >
-      <body>
+      <body data-theme="arrival">
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <GradientBlobs />
+          <ThemeArc />
           <SmoothScroll>{props.children}</SmoothScroll>
         </NextIntlClientProvider>
       </body>

@@ -1,98 +1,95 @@
 {
   "meta": {
-    "title": "AIcon — بیزنس‌ها را با هوش مصنوعی ۱۰ برابر کنید",
-    "description": "AIcon زیرساخت داده + مدیریت تغییر + پیاده‌سازی AI را برای تیم‌هایی که می‌خواهند سریع‌تر، دقیق‌تر و کوچک‌تر کار کنند، تحویل می‌دهد."
+    "title": "AIcon — بیزنس‌ت رو ۱۰× کن با AI",
+    "description": "مشاوره AI برای marketing، sales، operations و HR. مشکل رو زودتر پیدا می‌کنیم، با AI حلش می‌کنیم، تا ۱۰ برابر سریع‌تر و دقیق‌تر کار کنی."
   },
   "nav": {
+    "stats": "مشکل",
     "method": "روش",
-    "stats": "آمار",
     "process": "فرآیند",
     "contact": "تماس",
     "cta": "صحبت با ما"
   },
   "hero": {
-    "kicker": "AIcon · زیرساخت AI برای بیزنس‌ها",
-    "title": "بیزنس‌تان را",
-    "titleHighlight": "AI کنید",
-    "subtitle": "ما تیم‌ها را با AI ۱۰× سریع‌تر، دقیق‌تر و کوچک‌تر می‌کنیم — از طریق زیرساخت داده، playbookهای vertical، و مدیریت تغییر.",
+    "kicker": "AIcon · مشاوره AI",
+    "title": "بیزنس‌ت رو",
+    "titleHighlight": "۱۰× کن",
+    "subtitle": "مشکلاتت رو زودتر می‌بینیم، با AI حلشون می‌کنیم. تا ۱۰ برابر کمتر زمان و هزینه، با دقت بیشتر.",
     "cta": "شروع صحبت",
     "scrollCue": "اسکرول کنید"
   },
   "crisis": {
-    "kicker": "واقعیت بازار ۲۰۲۶",
-    "title": "۹۵٪ پایلوت‌های AI شکست می‌خورند.",
-    "body": "شرکت‌ها سالانه ۳۵ میلیارد دلار خرج GenAI می‌کنند، اما طبق پژوهش MIT NANDA، ۹۵٪ از پایلوت‌ها هیچ تأثیر اندازه‌گیری‌پذیری بر P&L نمی‌گذارند. مشکل مدل نیست — مشکل زیرساخت داده، فرآیند و مدیریت تغییر است.",
-    "source": "منبع: MIT NANDA · GenAI Divide (n=300+ initiative)"
+    "kicker": "حقیقت بازار",
+    "title": "۹۵٪ پروژه‌های AI شکست می‌خورن.",
+    "body": "شرکت‌ها میلیاردها دلار خرج AI می‌کنن، ولی اکثر pilot‌ها به نتیجه نمی‌رسن. مشکل مدل نیست — مشکل اینه که نمی‌دونن کجا و چطور AI بزنن.",
+    "source": "MIT NANDA · GenAI Divide"
   },
-  "stats": {
-    "kicker": "آمار صنعت ۲۰۲۵–۲۰۲۶",
-    "title": "شکاف بین داشتن AI و سود گرفتن از AI",
+  "reasoning": {
+    "kicker": "// reasoning",
+    "title": "مدل فکر می‌کنه. ما عمل می‌کنیم.",
+    "body": "هر vertical → یک agent، یک playbook، یک KPI. نه demo، نه prompt-shop."
+  },
+  "verticals": {
+    "kicker": "کجا کار می‌کنیم",
+    "title": "۴ حوزه‌ای که AI واقعاً پولساز می‌کنه",
     "items": [
       {
-        "value": "88%",
-        "label": "سازمان‌هایی که حداقل یک function را با AI deploy کرده‌اند",
-        "source": "McKinsey State of AI 2025 (n=1,993)"
+        "name": "Marketing",
+        "metric": "۸ ساعت → ۴۰ دقیقه",
+        "body": "تولید content، personalization، analysis رفتار مشتری، optimization کمپین."
       },
       {
-        "value": "6%",
-        "label": "فقط ۶٪ به‌عنوان «AI High Performer» شناخته می‌شوند",
-        "source": "McKinsey State of AI 2025"
+        "name": "Sales Funnel",
+        "metric": "۲× conversion",
+        "body": "lead scoring، outreach automation، CRM enrichment، call analysis."
       },
       {
-        "value": "42%",
-        "label": "شرکت‌هایی که در ۲۰۲۵ بیشتر پروژه‌های AI خود را رها کردند (از ۱۷٪ در ۲۰۲۴)",
-        "source": "S&P Global VotE AI&ML 2025 (n=1,006)"
+        "name": "Operations",
+        "metric": "۷۰٪ کاهش manual work",
+        "body": "اتومیشن فرآیند، document processing، quality control، predictive maintenance."
       },
       {
-        "value": "95%",
-        "label": "پایلوت‌های GenAI بدون تأثیر قابل‌اندازه‌گیری بر P&L",
-        "source": "MIT NANDA GenAI Divide"
+        "name": "Human Resources",
+        "metric": "۵× سرعت hiring",
+        "body": "screening، onboarding، performance analysis، L&D personalization."
       }
     ]
   },
-  "pillars": {
-    "kicker": "روش AIcon",
-    "title": "سه ستون انتقال به AI",
+  "outcome": {
+    "kicker": "نتیجه",
+    "title": "تا ۱۰× سریع‌تر، دقیق‌تر، با تیم کوچک‌تر",
     "items": [
-      {
-        "title": "زیرساخت داده",
-        "body": "۹۱٪ سازمان‌ها می‌گویند زیرساخت داده برای AI ضروری است، فقط ۵۵٪ آن را دارند. ما این شکاف را پر می‌کنیم — schema، quality، pipelines، RAG-ready."
-      },
-      {
-        "title": "پیاده‌سازی Vertical",
-        "body": "playbookهای آماده برای customer support، sales ops، marketing، و internal automation. نه prompt-shop ارزان — agentهای production-grade با data wiring درست."
-      },
-      {
-        "title": "مدیریت تغییر",
-        "body": "آموزش تیم، تعریف KPI، measurement framework، و adoption ramp. AI بدون change management = ۹۵٪ pilot failure."
-      }
+      { "value": "10×", "label": "کاهش زمان فرآیندها" },
+      { "value": "5×", "label": "افزایش دقت تصمیم‌گیری" },
+      { "value": "70%", "label": "صرفه‌جویی در هزینه عملیاتی" },
+      { "value": "3×", "label": "اسکیل بدون اضافه کردن نیرو" }
     ]
   },
   "method": {
-    "kicker": "فرآیند ۹۰ روزه",
-    "title": "از Audit تا Production",
+    "kicker": "روش ما",
+    "title": "از تشخیص تا اجرا، در ۹۰ روز",
     "steps": [
-      { "n": "۰۱", "title": "Audit", "body": "۲ هفته — مپ کردن workflow، data، tooling، و pain points فعلی." },
-      { "n": "۰۲", "title": "Blueprint", "body": "۲ هفته — معماری راه‌حل، playbook انتخاب، ROI projection." },
-      { "n": "۰۳", "title": "Build", "body": "۶ هفته — پیاده‌سازی، data plumbing، agent deployment، integration." },
-      { "n": "۰۴", "title": "Operate", "body": "ماهانه — retainer برای maintain، iterate، scale." }
+      { "n": "۰۱", "title": "Audit", "body": "فرآیندها، داده‌ها، gap‌ها رو می‌بینیم. مشکلات رو زودتر از خودت می‌فهمیم." },
+      { "n": "۰۲", "title": "Blueprint", "body": "روی هر مشکل، یک AI solution مشخص. ROI و timeline قبل از شروع." },
+      { "n": "۰۳", "title": "Build", "body": "پیاده‌سازی همراه تیم. data wiring، agent‌ها، integration‌ها." },
+      { "n": "۰۴", "title": "Operate", "body": "ماهانه نگه‌داری، iterate، scale. تا وقتی بخوای." }
     ]
   },
   "proof": {
     "kicker": "تجربه ما",
-    "title": "تیم ما خودش ۹۰٪ از فرآیندهای داخلی را با AI اتومیت کرده.",
-    "body": "ما این کار را برای خودمان کردیم — قبل از اینکه به مشتری بفروشیم. حالا این playbookها را به تیم‌های شما منتقل می‌کنیم."
+    "title": "اول روی خودمون امتحان کردیم.",
+    "body": "تیم ما ۹۰٪ فرآیندهای داخلی‌اش رو با AI اتومیت کرده. حالا همون playbook رو به تیم تو منتقل می‌کنیم."
   },
   "cta": {
     "kicker": "قدم بعد",
-    "title": "بیزنس‌تان آماده AI شدن است؟",
-    "body": "یک Audit رایگان ۳۰ دقیقه‌ای رزرو کنید. ROI projection و roadmap اولیه دریافت کنید.",
+    "title": "بریم ببینیم بیزنس‌ت کجاهاش AI می‌خواد؟",
+    "body": "یک Audit رایگان ۳۰ دقیقه‌ای. ROI تخمینی و roadmap اولیه دستت میاد.",
     "button": "رزرو Audit رایگان",
     "email": "hello@aicon.dev"
   },
   "footer": {
-    "tagline": "زیرساخت AI برای بیزنس‌ها",
-    "copyright": "© ۲۰۲۶ AIcon. تمام حقوق محفوظ است."
+    "tagline": "مشاوره AI برای بیزنس‌ها",
+    "copyright": "© ۲۰۲۶ AIcon"
   },
   "lang": {
     "switchTo": "English"

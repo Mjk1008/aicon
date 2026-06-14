@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { MaskedText } from "@/components/primitives/MaskedText";
 
 export function Method() {
   const t = useTranslations("method");
@@ -51,23 +52,44 @@ export function Method() {
   }, []);
 
   return (
-    <section ref={ref} id="process" className="py-32 px-6 md:px-16 border-t border-[var(--color-border)]">
+    <section
+      ref={ref}
+      data-theme="method"
+      id="process"
+      className="relative py-32 md:py-40 px-6 md:px-16"
+    >
       <div className="max-w-5xl mx-auto">
         <p className="kicker mb-6">{t("kicker")}</p>
         <h2 className="text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05] font-medium tracking-tight mb-20">
-          {t("title")}
+          <MaskedText text={t("title")} />
         </h2>
 
         <div className="relative pl-8 md:pl-16">
-          <div className="method-line absolute top-0 bottom-0 left-0 md:left-4 w-px bg-[var(--color-accent)]" />
+          <div
+            className="method-line absolute top-0 bottom-0 left-0 md:left-4 w-px"
+            style={{ background: "var(--accent)" }}
+          />
           {steps.map((step, i) => (
             <div key={i} className="method-row relative pb-16 last:pb-0">
-              <div className="absolute -left-[1.65rem] md:-left-[1.65rem] top-1 w-3 h-3 rounded-full bg-[var(--color-accent)] glow-accent" />
+              <div
+                className="absolute -left-[1.65rem] md:-left-[1.65rem] top-2 w-3 h-3 rounded-full"
+                style={{
+                  background: "var(--accent)",
+                  boxShadow: "0 0 40px var(--accent)",
+                }}
+              />
               <div className="flex items-baseline gap-6 mb-3">
-                <span className="nums-en text-sm font-mono text-[var(--color-fg-subtle)]">{step.n}</span>
+                <span className="nums-en text-sm font-mono" style={{ color: "var(--fg-muted)" }}>
+                  {step.n}
+                </span>
                 <h3 className="text-2xl md:text-3xl font-medium">{step.title}</h3>
               </div>
-              <p className="text-[var(--color-fg-muted)] leading-relaxed max-w-2xl text-lg">{step.body}</p>
+              <p
+                className="leading-relaxed max-w-2xl text-lg"
+                style={{ color: "var(--fg-muted)" }}
+              >
+                {step.body}
+              </p>
             </div>
           ))}
         </div>
