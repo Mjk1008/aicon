@@ -5,83 +5,183 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MaskedText } from "@/components/primitives/MaskedText";
-import { ScrambleText } from "@/components/primitives/ScrambleText";
+import { CharSplit } from "@/components/primitives/CharSplit";
 
-/** The "Diagnosis Lab" — 4 verticals as floating panels, staggered scroll reveal. */
+const THEMES = ["diagnose", "reason", "outcome", "method"] as const;
+const ACCENTS = ["#c8ff5f", "#768FFF", "#9ce8e0", "#ff8466"];
+
+type Item = {
+  name: string;
+  metric: string;
+  body: string;
+  keywords: string[];
+};
+
+/**
+ * Horizontal-scroll chapters. Each vertical is a full-viewport panel with its
+ * own accent + bg tint. GSAP ScrollTrigger pins the section and converts
+ * vertical scroll into horizontal pan across the 4 panels.
+ *
+ * Track direction forced LTR so the panel order (01→04) is stable in both
+ * Persian and English; the text inside each panel still respects locale dir.
+ */
 export function Verticals() {
   const t = useTranslations("verticals");
-  const items = t.raw("items") as { name: string; metric: string; body: string }[];
-  const ref = useRef<HTMLElement>(null);
+  const items = t.raw("items") as Item[];
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!wrapRef.current || !trackRef.current) return;
     const ctx = gsap.context(() => {
-      const cards = ref.current!.querySelectorAll(".vertical-card");
-      cards.forEach((card, i) => {
-        gsap.from(card, {
-          y: 80,
-          opacity: 0,
-          duration: 1,
-          ease: "power3.out",
-          delay: i * 0.08,
-          scrollTrigger: {
-            trigger: card,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        });
+      const distance = () =>
+        (trackRef.current?.scrollWidth ?? 0) - window.innerWidth;
+
+      gsap.to(trackRef.current!, {
+        x: () => -distance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: wrapRef.current!,
+          start: "top top",
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 0.4,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+        },
       });
-    }, ref);
+    }, wrapRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={ref}
-      data-theme="diagnose"
-      id="diagnose"
-      className="relative py-32 md:py-40 px-6 md:px-16"
-    >
-      <div className="max-w-7xl mx-auto">
-        <p className="kicker mb-6">{t("kicker")}</p>
-        <h2 className="text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05] font-medium tracking-tight max-w-3xl mb-20">
-          <MaskedText text={t("title")} />
-        </h2>
+    <section data-theme="diagnose" id="diagnose">
+      <div ref={wrapRef} className="relative">
+        {/* track */}
+        <div className="h-screen w-screen overflow-hidden">
+          <div
+            ref={trackRef}
+            className="flex h-full"
+            style={{ direction: "ltr", width: `${items.length * 100}vw` }}
+          >
+            {items.map((it, i) => (
+              <div
+                key={i}
+                className="w-screen h-screen relative shrink-0 px-6 md:px-16 py-12 md:py-20 flex items-center"
+                style={{
+                  background:
+                    i === 0
+                      ? "var(--bg)"
+                      : `linear-gradient(110deg, var(--bg) 0%, color-mix(in srgb, ${ACCENTS[i]} 7%, var(--bg)) 100%)`,
+                }}
+              >
+                {/* huge watermark number */}
+                <div
+                  className="absolute pointer-events-none select-none nums-en font-medium leading-none tracking-tighter"
+                  style={{
+                    color: ACCENTS[i],
+                    opacity: 0.07,
+                    fontSize: "clamp(20rem, 50vw, 60rem)",
+                    insetInlineEnd: "-4vw",
+                    bottom: "-8vh",
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          {items.map((it, i) => (
-            <div
-              key={i}
-              className="vertical-card group relative p-8 md:p-10 rounded-3xl overflow-hidden"
-              style={{
-                background: "color-mix(in srgb, var(--fg) 4%, transparent)",
-                border: "1px solid color-mix(in srgb, var(--fg) 8%, transparent)",
-              }}
+                <div className="relative max-w-7xl mx-auto w-full grid md:grid-cols-[1.4fr_1fr] gap-12 items-center">
+                  <div>
+                    {/* chapter index */}
+                    <div
+                      className="text-xs font-mono uppercase tracking-[0.2em] mb-8 nums-en flex items-center gap-3"
+                      style={{ color: ACCENTS[i] }}
+                    >
+                      <span>{String(i + 1).padStart(2, "0")} / 04</span>
+                      <span
+                        className="h-px flex-1 max-w-24"
+                        style={{
+                          background: `color-mix(in srgb, ${ACCENTS[i]} 40%, transparent)`,
+                        }}
+                      />
+                      <span style={{ color: "var(--fg-muted)" }}>{t("kicker")}</span>
+                    </div>
+
+                    {/* name */}
+                    <h3 className="text-[clamp(3rem,8vw,7rem)] leading-[0.92] font-medium tracking-tight mb-10">
+                      <MaskedText text={it.name} threshold={0.1} />
+                    </h3>
+
+                    {/* body */}
+                    <p
+                      className="text-base md:text-lg leading-relaxed max-w-xl mb-10"
+                      style={{ color: "var(--fg-muted)" }}
+                    >
+                      {it.body}
+                    </p>
+
+                    {/* keyword chips */}
+                    <ul className="flex flex-wrap gap-2 max-w-2xl">
+                      {it.keywords.map((k, ki) => (
+                        <li
+                          key={ki}
+                          className="px-3 py-1.5 rounded-full text-xs"
+                          style={{
+                            background: `color-mix(in srgb, ${ACCENTS[i]} 10%, transparent)`,
+                            color: "var(--fg)",
+                            border: `1px solid color-mix(in srgb, ${ACCENTS[i]} 28%, transparent)`,
+                          }}
+                        >
+                          {k}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* right column: just the metric, styled large */}
+                  <div className="hidden md:flex flex-col items-end justify-center text-end">
+                    <div className="text-xs font-mono uppercase tracking-[0.18em] mb-4" style={{ color: "var(--fg-muted)" }}>
+                      metric
+                    </div>
+                    <div
+                      className="text-[clamp(2.5rem,5vw,5rem)] font-medium leading-[0.95] tracking-tighter nums-en"
+                      style={{ color: ACCENTS[i] }}
+                    >
+                      <CharSplit text={it.metric} stagger={0.04} duration={0.9} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* fixed section intro + progress (in viewport overlay, doesn't move with track) */}
+        <div className="absolute top-0 inset-x-0 z-10 pointer-events-none px-6 md:px-16 py-8">
+          <div className="max-w-7xl mx-auto flex items-baseline justify-between">
+            <p className="kicker">{t("kicker")}</p>
+            <p
+              className="text-xs font-mono uppercase tracking-[0.18em]"
+              style={{ color: "var(--fg-muted)" }}
             >
+              <MaskedText text={t("title")} eager />
+            </p>
+          </div>
+        </div>
+
+        {/* bottom progress segments */}
+        <div className="absolute bottom-6 inset-x-0 z-10 px-6 md:px-16 pointer-events-none">
+          <div className="max-w-7xl mx-auto flex items-center gap-2">
+            {items.map((_, i) => (
               <div
-                className="absolute top-6 right-6 text-xs font-mono tracking-widest"
-                style={{ color: "var(--fg-muted)" }}
-              >
-                <ScrambleText text={`0${i + 1}`} loop loopInterval={6000 + i * 800} />
-              </div>
-              <div
-                className="text-xs font-mono uppercase tracking-[0.2em] mb-6"
-                style={{ color: "var(--accent)" }}
-              >
-                {it.name}
-              </div>
-              <div className="text-[clamp(2rem,4vw,3.5rem)] font-medium leading-none mb-6 nums-en">
-                {it.metric}
-              </div>
-              <p style={{ color: "var(--fg-muted)" }} className="leading-relaxed">
-                {it.body}
-              </p>
-              <div
-                className="mt-8 h-px w-12 transition-all duration-700 group-hover:w-full"
-                style={{ background: "var(--accent)" }}
+                key={i}
+                className="flex-1 h-px transition-opacity duration-500"
+                style={{
+                  background: `color-mix(in srgb, ${ACCENTS[i]} 60%, transparent)`,
+                  opacity: 0.7,
+                }}
               />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
