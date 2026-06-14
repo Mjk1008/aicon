@@ -25,28 +25,32 @@
     "source": "MIT NANDA · GenAI Divide"
   },
   "verticals": {
-    "kicker": "Where we operate",
+    "kicker": "Our verticals",
     "title": "Four places AI actually moves the needle.",
     "items": [
       {
         "name": "Marketing",
         "metric": "8 hrs → 40 min",
-        "body": "Content production, audience personalization, customer behavior analytics, campaign optimization."
+        "body": "Content production, audience-grade personalization, behavior analytics, campaign optimization — agents that work alongside your marketing team.",
+        "keywords": ["Content", "Personalization", "Behavior", "Campaigns", "Brand voice", "A/B testing"]
       },
       {
         "name": "Sales",
         "metric": "2× conversion",
-        "body": "Lead scoring, outreach automation, CRM enrichment, call analysis."
+        "body": "Lead scoring, outreach automation, CRM enrichment, call analysis. Reps spend more time closing, less time filling fields.",
+        "keywords": ["Lead scoring", "Outreach", "CRM", "Call analysis", "Forecast", "Objections"]
       },
       {
         "name": "Operations",
         "metric": "70% less manual work",
-        "body": "Process automation, document processing, quality control, predictive maintenance."
+        "body": "Process automation, document processing, quality control, predictive maintenance. Repetitive work taken off human shoulders.",
+        "keywords": ["Automation", "Documents", "Quality", "Maintenance", "Inventory", "Scheduling"]
       },
       {
         "name": "Human Resources",
         "metric": "5× hiring speed",
-        "body": "Screening, onboarding, performance analytics, personalized L&D."
+        "body": "Screening, onboarding, performance analytics, personalized L&D. HR focuses on people, not paperwork.",
+        "keywords": ["Screening", "Onboarding", "Performance", "L&D", "Feedback", "Matching"]
       }
     ]
   },
