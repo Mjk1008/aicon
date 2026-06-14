@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AIcon
 
-## Getting Started
+AI transformation infrastructure for businesses — bilingual (Persian/English) landing page.
 
-First, run the development server:
+3D scroll experience built on:
+
+- **Next.js 16** App Router + TypeScript
+- **React Three Fiber** + **drei** (3D scenes)
+- **GSAP ScrollTrigger** + **Lenis** (smooth scroll choreography)
+- **Tailwind CSS v4**
+- **next-intl** (fa / en, RTL/LTR)
+- **Vazirmatn** + **Inter** (variable fonts)
+
+## Dev
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Opens at <http://localhost:3000>. `/fa` for Persian (RTL), `/en` for English.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/[locale]/          # i18n routes
+components/
+  scenes/              # R3F canvases (Hero orb, Stats variants)
+  sections/            # Hero / Crisis / Stats / Pillars / Method / Proof / CTA / Footer
+  Nav.tsx
+  SmoothScroll.tsx     # Lenis + GSAP wiring
+i18n/                  # next-intl routing + request config
+messages/{fa,en}.json  # all copy
+proxy.ts               # next-intl middleware (renamed from middleware.ts in Next 16)
+```
 
-## Learn More
+## Content
 
-To learn more about Next.js, take a look at the following resources:
+All copy lives in `messages/fa.json` and `messages/en.json`. Stats backed by verified research:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- McKinsey State of AI 2025
+- S&P Global VotE AI&ML 2025
+- MIT NANDA GenAI Divide
+- HBR/Profisee 2025
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel-ready. `vercel` or `npm run build`.

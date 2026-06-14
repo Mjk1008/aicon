@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "title": "AIcon — 10x your business with AI",
+    "description": "AIcon delivers data foundation + change management + AI implementation for teams that want to operate 10x faster, sharper, and leaner."
+  },
+  "nav": {
+    "method": "Method",
+    "stats": "Stats",
+    "process": "Process",
+    "contact": "Contact",
+    "cta": "Talk to us"
+  },
+  "hero": {
+    "kicker": "AIcon · AI infrastructure for businesses",
+    "title": "AI-ify your",
+    "titleHighlight": "business",
+    "subtitle": "We make teams 10× faster, sharper, and leaner with AI — through data foundation, vertical playbooks, and change management.",
+    "cta": "Start the conversation",
+    "scrollCue": "Scroll"
+  },
+  "crisis": {
+    "kicker": "Market reality 2026",
+    "title": "95% of AI pilots fail.",
+    "body": "Companies spend ~$35B/year on GenAI, yet according to MIT NANDA research, 95% of pilots show no measurable P&L impact. The problem isn't the model — it's data foundation, process, and change management.",
+    "source": "Source: MIT NANDA · GenAI Divide (n=300+ initiatives)"
+  },
+  "stats": {
+    "kicker": "Industry stats 2025–2026",
+    "title": "The gap between having AI and profiting from AI",
+    "items": [
+      {
+        "value": "88%",
+        "label": "of organizations deploy AI in at least one function",
+        "source": "McKinsey State of AI 2025 (n=1,993)"
+      },
+      {
+        "value": "6%",
+        "label": "are recognized as AI High Performers",
+        "source": "McKinsey State of AI 2025"
+      },
+      {
+        "value": "42%",
+        "label": "of companies abandoned most AI initiatives in 2025 (up from 17% in 2024)",
+        "source": "S&P Global VotE AI&ML 2025 (n=1,006)"
+      },
+      {
+        "value": "95%",
+        "label": "of GenAI pilots produce no measurable P&L impact",
+        "source": "MIT NANDA GenAI Divide"
+      }
+    ]
+  },
+  "pillars": {
+    "kicker": "The AIcon method",
+    "title": "Three pillars of AI transition",
+    "items": [
+      {
+        "title": "Data Foundation",
+        "body": "91% of organizations say data foundation is essential for AI; only 55% have one. We close that gap — schema, quality, pipelines, RAG-ready."
+      },
+      {
+        "title": "Vertical Implementation",
+        "body": "Ready playbooks for customer support, sales ops, marketing, and internal automation. Not a cheap prompt-shop — production-grade agents with proper data wiring."
+      },
+      {
+        "title": "Change Management",
+        "body": "Team enablement, KPI definition, measurement framework, and adoption ramp. AI without change management = 95% pilot failure."
+      }
+    ]
+  },
+  "method": {
+    "kicker": "90-day process",
+    "title": "From Audit to Production",
+    "steps": [
+      { "n": "01", "title": "Audit", "body": "2 weeks — map current workflows, data, tooling, and pain points." },
+      { "n": "02", "title": "Blueprint", "body": "2 weeks — solution architecture, playbook selection, ROI projection." },
+      { "n": "03", "title": "Build", "body": "6 weeks — implementation, data plumbing, agent deployment, integration." },
+      { "n": "04", "title": "Operate", "body": "Monthly retainer to maintain, iterate, scale." }
+    ]
+  },
+  "proof": {
+    "kicker": "Our story",
+    "title": "Our own team automated 90% of internal processes with AI.",
+    "body": "We did this for ourselves first — before selling it. Now we transfer those playbooks to your team."
+  },
+  "cta": {
+    "kicker": "Next step",
+    "title": "Is your business ready to AI-ify?",
+    "body": "Book a free 30-minute audit. Get ROI projection and an initial roadmap.",
+    "button": "Book free audit",
+    "email": "hello@aicon.dev"
+  },
+  "footer": {
+    "tagline": "AI infrastructure for businesses",
+    "copyright": "© 2026 AIcon. All rights reserved."
+  },
+  "lang": {
+    "switchTo": "فارسی"
+  }
+}
