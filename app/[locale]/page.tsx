@@ -2,7 +2,6 @@ import { setRequestLocale } from "next-intl/server";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/sections/Hero";
 import { Crisis } from "@/components/sections/Crisis";
-import { Reduction } from "@/components/sections/Reduction";
 import { Verticals } from "@/components/sections/Verticals";
 import { Reasoning } from "@/components/sections/Reasoning";
 import { Outcome } from "@/components/sections/Outcome";
@@ -20,7 +19,6 @@ export default async function Page(props: PageProps<"/[locale]">) {
       <Nav />
       <Hero />
       <Crisis />
-      <Reduction />
       <Verticals />
       <Reasoning />
       <Outcome />
