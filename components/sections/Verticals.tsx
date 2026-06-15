@@ -33,6 +33,9 @@ export function Verticals() {
   useEffect(() => {
     if (!wrapRef.current || !trackRef.current) return;
     const ctx = gsap.context(() => {
+      // explicit initial: track aligned to start (panel 01 visible)
+      gsap.set(trackRef.current!, { x: 0 });
+
       const distance = () =>
         (trackRef.current?.scrollWidth ?? 0) - window.innerWidth;
 
@@ -49,6 +52,9 @@ export function Verticals() {
           anticipatePin: 1,
         },
       });
+
+      // recompute after fonts / R3F mount affect layout
+      requestAnimationFrame(() => ScrollTrigger.refresh());
     }, wrapRef);
     return () => ctx.revert();
   }, []);
@@ -57,7 +63,7 @@ export function Verticals() {
     <section data-theme="diagnose" id="diagnose">
       <div ref={wrapRef} className="relative">
         {/* track */}
-        <div className="h-screen w-screen overflow-hidden">
+        <div className="h-screen w-screen overflow-hidden" style={{ direction: "ltr" }}>
           <div
             ref={trackRef}
             className="flex h-full"
