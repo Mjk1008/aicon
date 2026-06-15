@@ -56,7 +56,7 @@ export function Reduction() {
 
   return (
     <section data-theme="arrival" id="reduction" className="relative">
-      <div ref={wrapRef} className="h-[200vh] relative">
+      <div ref={wrapRef} className="h-[300vh] relative">
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           <div className="absolute inset-0 z-0">
             <ReductionMesh />

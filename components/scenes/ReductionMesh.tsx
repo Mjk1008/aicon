@@ -16,8 +16,8 @@ import * as THREE from "three";
  */
 
 function buildLineGeometry() {
-  // higher detail = more lines to cull from
-  const ico = new THREE.IcosahedronGeometry(2, 2);
+  // big & dense — fills the viewport, lots of edges to cull from
+  const ico = new THREE.IcosahedronGeometry(4.2, 3);
   const edges = new THREE.EdgesGeometry(ico, 0);
   ico.dispose();
 
@@ -81,6 +81,7 @@ const fragmentShader = /* glsl */ `
 function Reduction() {
   const geom = useMemo(() => buildLineGeometry(), []);
   const matRef = useRef<THREE.ShaderMaterial>(null);
+  const groupRef = useRef<THREE.Group>(null);
   const cubeRef = useRef<THREE.Mesh>(null);
   const cubeMatRef = useRef<THREE.MeshStandardMaterial>(null);
   const cur = useRef({ progress: 0 });
@@ -94,26 +95,38 @@ function Reduction() {
   );
 
   useFrame((s) => {
-    if (!matRef.current) return;
+    if (!matRef.current || !groupRef.current) return;
     const root = document.documentElement;
     const target =
       parseFloat(getComputedStyle(root).getPropertyValue("--reduction-progress")) || 0;
     cur.current.progress += (target - cur.current.progress) * 0.08;
-    matRef.current.uniforms.uProgress.value = cur.current.progress;
+    const p = cur.current.progress;
+    matRef.current.uniforms.uProgress.value = p;
+
+    const t = s.clock.elapsedTime;
+
+    // BIG OBJECT SWIMMING BEHIND THE CONTENT
+    // Drifts from below the viewport (y = -10) up through center to above (y = +8)
+    // as scroll progresses. Slight x sway + continuous rotation give a "swimming" feel.
+    groupRef.current.position.y = THREE.MathUtils.lerp(-10, 8, p);
+    groupRef.current.position.x = Math.sin(p * Math.PI * 1.2) * 1.5; // gentle lateral sway
+    groupRef.current.position.z = THREE.MathUtils.lerp(0, -1.5, p); // drifts slightly back
+    groupRef.current.rotation.y = p * Math.PI * 0.9 + Math.sin(t * 0.1) * 0.1;
+    groupRef.current.rotation.x = Math.sin(p * Math.PI) * 0.25 + Math.cos(t * 0.15) * 0.05;
+    groupRef.current.rotation.z = Math.sin(p * Math.PI * 1.4) * 0.18;
 
     if (cubeRef.current && cubeMatRef.current) {
-      const t = s.clock.elapsedTime;
-      const sc = 0.5 + cur.current.progress * 0.7 + Math.sin(t * 1.6) * 0.04;
+      const sc = 0.8 + p * 1.2 + Math.sin(t * 1.6) * 0.05;
       cubeRef.current.scale.set(sc, sc, sc);
       cubeRef.current.rotation.x = t * 0.4;
       cubeRef.current.rotation.z = t * 0.3;
-      cubeMatRef.current.emissiveIntensity = 0.2 + cur.current.progress * 2.2;
-      cubeMatRef.current.opacity = 0.0 + cur.current.progress * 1.0;
+      cubeMatRef.current.emissiveIntensity = 0.2 + p * 2.4;
+      cubeMatRef.current.opacity = p;
     }
   });
 
   return (
-    <group>
+    <group ref={groupRef}>
       <lineSegments geometry={geom}>
         <shaderMaterial
           ref={matRef}
@@ -125,7 +138,7 @@ function Reduction() {
         />
       </lineSegments>
       <mesh ref={cubeRef}>
-        <boxGeometry args={[0.5, 0.5, 0.5]} />
+        <boxGeometry args={[0.9, 0.9, 0.9]} />
         <meshStandardMaterial
           ref={cubeMatRef}
           color="#ffffff"
@@ -144,14 +157,14 @@ function Reduction() {
 export function ReductionMesh() {
   return (
     <Canvas
-      camera={{ position: [0, 0, 5.5], fov: 45 }}
+      camera={{ position: [0, 0, 3.5], fov: 55 }}
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: true }}
       style={{ background: "transparent" }}
     >
       <Suspense fallback={null}>
         <ambientLight intensity={0.3} />
-        <pointLight position={[0, 0, 0]} intensity={2.5} color="#c8ff5f" distance={5} />
+        <pointLight position={[0, 0, 2]} intensity={3} color="#c8ff5f" distance={8} />
         <Reduction />
       </Suspense>
     </Canvas>
