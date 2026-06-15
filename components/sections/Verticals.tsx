@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MaskedText } from "@/components/primitives/MaskedText";
-import { CharSplit } from "@/components/primitives/CharSplit";
 
 const THEMES = ["diagnose", "reason", "outcome", "method"] as const;
 const ACCENTS = ["#c8ff5f", "#768FFF", "#9ce8e0", "#ff8466"];
@@ -45,7 +44,7 @@ export function Verticals() {
           start: "top top",
           end: () => `+=${distance()}`,
           pin: true,
-          scrub: 0.4,
+          scrub: 1,
           invalidateOnRefresh: true,
           anticipatePin: 1,
         },
@@ -108,7 +107,7 @@ export function Verticals() {
 
                     {/* name */}
                     <h3 className="text-[clamp(3rem,8vw,7rem)] leading-[0.92] font-medium tracking-tight mb-10">
-                      <MaskedText text={it.name} threshold={0.1} />
+                      <MaskedText eager text={it.name} />
                     </h3>
 
                     {/* body */}
@@ -146,7 +145,7 @@ export function Verticals() {
                       className="text-[clamp(2.5rem,5vw,5rem)] font-medium leading-[0.95] tracking-tighter nums-en"
                       style={{ color: ACCENTS[i] }}
                     >
-                      <CharSplit text={it.metric} stagger={0.04} duration={0.9} />
+                      <MaskedText eager text={it.metric} stagger={0.05} />
                     </div>
                   </div>
                 </div>

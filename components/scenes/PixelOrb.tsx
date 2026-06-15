@@ -23,43 +23,48 @@ function Core() {
     const arr: [number, number, number][] = [];
     for (let i = 0; i < 8; i++) {
       const a = (i / 8) * Math.PI * 2;
-      arr.push([Math.cos(a) * 2.4, 0, Math.sin(a) * 2.4]);
+      arr.push([Math.cos(a) * 2.05, 0, Math.sin(a) * 2.05]);
     }
     return arr;
   }, []);
 
-  useFrame((s) => {
+  // local smoothing on top of --scroll-vel so the cubes never snap
+  const smoothVel = useRef(0);
+  const ringAngle = useRef(0);
+
+  useFrame((s, delta) => {
     const t = s.clock.getElapsedTime();
-    // read global scroll signals
     const root = typeof document !== "undefined" ? document.documentElement : null;
     const cs = root ? getComputedStyle(root) : null;
     const sp = cs ? parseFloat(cs.getPropertyValue("--scroll-progress")) || 0 : 0;
-    const vel = cs ? parseFloat(cs.getPropertyValue("--scroll-vel")) || 0 : 0;
+    const velRaw = cs ? parseFloat(cs.getPropertyValue("--scroll-vel")) || 0 : 0;
     const mxRaw = cs ? parseFloat(cs.getPropertyValue("--mx")) || 0 : 0;
     const myRaw = cs ? parseFloat(cs.getPropertyValue("--my")) || 0 : 0;
 
+    // critically-damped low-pass on velocity (much slower attack than --scroll-vel)
+    smoothVel.current += (Math.min(velRaw, 1) - smoothVel.current) * 0.04;
+    const vel = smoothVel.current;
+
     if (groupRef.current) {
-      // scroll progress drifts orientation; mouse adds gentle parallax tilt
       groupRef.current.rotation.y = t * 0.18 + mxRaw * 0.25;
       groupRef.current.rotation.x = Math.sin(t * 0.25) * 0.08 - myRaw * 0.18;
-      // velocity-aware scale pulse — fast scroll = the core breathes outward
-      const wobble = 1 + Math.min(vel, 1) * 0.12;
-      // gentle scroll-bound scale-down so it doesn't dominate later sections
+      const wobble = 1 + vel * 0.04;
       const target = wobble * (1 - sp * 0.18);
       groupRef.current.scale.lerp({ x: target, y: target, z: target } as THREE.Vector3, 0.08);
     }
     if (ringRef.current) {
-      // velocity makes the ring spin faster
-      ringRef.current.rotation.z = -t * (0.25 + vel * 0.6);
-      ringRef.current.rotation.y = t * 0.1;
+      // integrate angle from a smoothed rotational speed so it can never snap
+      const speed = 0.18 + vel * 0.12;
+      ringAngle.current -= speed * delta;
+      ringRef.current.rotation.z = ringAngle.current;
+      ringRef.current.rotation.y = t * 0.08;
     }
     if (innerRef.current) {
       innerRef.current.rotation.x = -t * 0.4;
       innerRef.current.rotation.z = t * 0.3;
     }
     if (centerRef.current) {
-      // pulse driven by clock + velocity
-      const s2 = 1 + Math.sin(t * 1.6) * 0.06 + Math.min(vel, 1) * 0.15;
+      const s2 = 1 + Math.sin(t * 1.6) * 0.05 + vel * 0.04;
       centerRef.current.scale.set(s2, s2, s2);
     }
   });
@@ -69,38 +74,40 @@ function Core() {
       {/* outer wireframe icosahedron */}
       <mesh>
         <icosahedronGeometry args={[2, 1]} />
-        <meshBasicMaterial color="#c8ff5f" wireframe transparent opacity={0.5} />
+        <meshBasicMaterial color="#c8ff5f" wireframe transparent opacity={0.28} />
       </mesh>
 
       {/* inner wireframe — second layer */}
       <mesh ref={innerRef} rotation={[Math.PI / 6, Math.PI / 4, 0]}>
         <icosahedronGeometry args={[1.4, 0]} />
-        <meshBasicMaterial color="#ffffff" wireframe transparent opacity={0.22} />
+        <meshBasicMaterial color="#ffffff" wireframe transparent opacity={0.12} />
       </mesh>
 
       {/* bright center cube */}
       <mesh ref={centerRef}>
-        <boxGeometry args={[0.42, 0.42, 0.42]} />
+        <boxGeometry args={[0.32, 0.32, 0.32]} />
         <meshStandardMaterial
           color="#ffffff"
           emissive="#c8ff5f"
-          emissiveIntensity={1.6}
-          roughness={0.2}
-          metalness={0.6}
+          emissiveIntensity={0.9}
+          roughness={0.3}
+          metalness={0.5}
         />
       </mesh>
 
-      {/* 8-cube orbital ring — echoes the brand mark */}
+      {/* 8-cube orbital ring — echoes the brand mark, kept restrained */}
       <group ref={ringRef}>
         {ringPositions.map((pos, i) => (
           <mesh key={i} position={pos}>
-            <boxGeometry args={[0.26, 0.26, 0.26]} />
+            <boxGeometry args={[0.14, 0.14, 0.14]} />
             <meshStandardMaterial
               color="#c8ff5f"
               emissive="#c8ff5f"
-              emissiveIntensity={0.7}
-              roughness={0.25}
-              metalness={0.4}
+              emissiveIntensity={0.3}
+              roughness={0.4}
+              metalness={0.3}
+              transparent
+              opacity={0.85}
             />
           </mesh>
         ))}
