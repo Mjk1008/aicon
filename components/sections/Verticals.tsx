@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -26,6 +26,8 @@ type Item = {
  */
 export function Verticals() {
   const t = useTranslations("verticals");
+  const locale = useLocale();
+  const dir = locale === "fa" ? "rtl" : "ltr";
   const items = t.raw("items") as Item[];
   const wrapRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -72,6 +74,7 @@ export function Verticals() {
             {items.map((it, i) => (
               <div
                 key={i}
+                dir={dir}
                 className="w-screen h-screen relative shrink-0 px-6 md:px-16 py-12 md:py-20 flex items-center"
                 style={{
                   background:
