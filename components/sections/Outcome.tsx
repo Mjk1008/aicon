@@ -65,9 +65,11 @@ export function Outcome() {
                 <ChronoRing size={28} strokeWidth={1.5} duration={1500} delay={i * 200 + 300} />
               </div>
 
-              {/* char-split metric value */}
+              {/* char-split metric value — forced LTR so split spans don't
+                  flip on RTL pages */}
               <div
-                className="text-[clamp(3.5rem,8vw,7rem)] leading-none font-medium tracking-tighter nums-en"
+                dir="ltr"
+                className="text-[clamp(3.5rem,8vw,7rem)] leading-none font-medium tracking-tighter nums-en text-start"
                 style={{ color: "var(--accent)" }}
               >
                 <CharSplit text={it.value} stagger={0.05} duration={1.1} />
