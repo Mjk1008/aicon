@@ -1,0 +1,10 @@
+{
+  "platform": "static",
+  "app": "aicon-landing",
+  "static": {
+    "path": "out"
+  },
+  "build": {
+    "location": "iran"
+  }
+}

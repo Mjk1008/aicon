@@ -55,9 +55,11 @@ export function MaskedText({
 
   const tokens = tokensWithSpaces(text);
   let i = 0;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Tag = As as any;
 
   return (
-    <As
+    <Tag
       ref={ref as React.Ref<HTMLElement>}
       className={className}
       data-revealed={revealed ? "true" : "false"}
@@ -79,6 +81,6 @@ export function MaskedText({
         );
       })}
       {trailing}
-    </As>
+    </Tag>
   );
 }

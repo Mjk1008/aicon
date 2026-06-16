@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
-import { MaskedText } from "@/components/primitives/MaskedText";
+import { useCanvasGate } from "@/lib/useCanvasGate";
 
 const PixelOrb = dynamic(() => import("@/components/scenes/PixelOrb").then((m) => m.PixelOrb), {
   ssr: false,
@@ -10,11 +10,24 @@ const PixelOrb = dynamic(() => import("@/components/scenes/PixelOrb").then((m) =
 
 export function Hero() {
   const t = useTranslations("hero");
+  const mountOrb = useCanvasGate();
 
   return (
     <section data-theme="arrival" className="relative min-h-screen w-full overflow-hidden grid-bg">
       <div className="absolute inset-0 z-0">
-        <PixelOrb />
+        {mountOrb ? (
+          <PixelOrb />
+        ) : (
+          /* CSS-only placeholder so LCP paints instantly and the section
+             doesn't go pitch-black on mobile / reduced-motion users. */
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 55%)",
+            }}
+          />
+        )}
       </div>
       <div
         className="absolute inset-0 pointer-events-none z-[1]"
@@ -24,33 +37,16 @@ export function Hero() {
         }}
       />
 
-      <div className="relative z-10 min-h-screen flex flex-col justify-center px-6 md:px-16 max-w-7xl mx-auto">
-        <p className="kicker mb-6">{t("kicker")}</p>
-        <h1 className="text-[clamp(3rem,9vw,8rem)] leading-[0.95] font-medium tracking-tight max-w-4xl">
-          <MaskedText eager text={t("title") + " "} />
-          <MaskedText
-            eager
-            as="span"
-            text={t("titleHighlight")}
-            className="italic font-light"
-            stagger={0.05}
-          />
+      <div className="relative z-10 min-h-screen flex flex-col items-center gap-6 px-6 md:px-16 text-center pt-[14vh]">
+        <img
+          src="/brand.svg"
+          alt="AIcon"
+          className="w-20 h-20 md:w-24 md:h-24"
+        />
+        <h1 className="font-mono text-[clamp(2.5rem,6vw,5rem)] leading-none tracking-tight">
+          AIcon<span style={{ color: "#c8ff5f" }}>.</span>
         </h1>
-        <p
-          className="mt-8 max-w-xl text-lg md:text-xl leading-relaxed"
-          style={{ color: "var(--fg-muted)" }}
-        >
-          <MaskedText eager text={t("subtitle")} stagger={0.02} />
-        </p>
-        <div className="mt-12 flex items-center gap-4">
-          <a
-            href="#contact"
-            className="px-7 py-3.5 rounded-full font-medium hover:opacity-90 transition"
-            style={{ background: "var(--accent)", color: "var(--bg)" }}
-          >
-            {t("cta")}
-          </a>
-        </div>
+        <p className="kicker">{t("kicker")}</p>
       </div>
 
       <div

@@ -1,10 +1,17 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MaskedText } from "@/components/primitives/MaskedText";
+import { useCanvasGate } from "@/lib/useCanvasGate";
+
+const ReductionMesh = dynamic(
+  () => import("@/components/scenes/ReductionMesh").then((m) => m.ReductionMesh),
+  { ssr: false }
+);
 
 const THEMES = ["diagnose", "reason", "outcome", "method"] as const;
 const ACCENTS = ["#c8ff5f", "#768FFF", "#9ce8e0", "#ff8466"];
@@ -31,6 +38,26 @@ export function Verticals() {
   const items = t.raw("items") as Item[];
   const wrapRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const [nearViewport, setNearViewport] = useState(false);
+  const canvasOk = useCanvasGate();
+  const mountMesh = nearViewport && canvasOk;
+
+  // Wait until the section is within one viewport of the user before paying
+  // for a second WebGL context. Capability gating happens in useCanvasGate.
+  useEffect(() => {
+    if (!wrapRef.current) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNearViewport(true);
+          obs.disconnect();
+        }
+      },
+      { rootMargin: "200% 0px 200% 0px" }
+    );
+    obs.observe(wrapRef.current);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!wrapRef.current || !trackRef.current) return;
@@ -52,6 +79,12 @@ export function Verticals() {
           scrub: 1,
           invalidateOnRefresh: true,
           anticipatePin: 1,
+          onUpdate: (st) => {
+            document.documentElement.style.setProperty(
+              "--reduction-progress",
+              st.progress.toFixed(4)
+            );
+          },
         },
       });
 
@@ -64,8 +97,23 @@ export function Verticals() {
   return (
     <section data-theme="diagnose" id="diagnose">
       <div ref={wrapRef} className="relative">
+        {/* fixed 3D mesh behind the track — driven by --reduction-progress */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="sticky top-0 h-screen w-full">
+            {mountMesh && <ReductionMesh />}
+            {/* radial vignette so panel content stays readable over bright lines */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, transparent 0%, color-mix(in srgb, var(--bg) 55%, transparent) 65%, color-mix(in srgb, var(--bg) 85%, transparent) 100%)",
+              }}
+            />
+          </div>
+        </div>
+
         {/* track */}
-        <div className="h-screen w-screen overflow-hidden" style={{ direction: "ltr" }}>
+        <div className="relative z-[1] h-screen w-screen overflow-hidden" style={{ direction: "ltr" }}>
           <div
             ref={trackRef}
             className="flex h-full"
@@ -77,10 +125,7 @@ export function Verticals() {
                 dir={dir}
                 className="w-screen h-screen relative shrink-0 px-6 md:px-16 py-12 md:py-20 flex items-center"
                 style={{
-                  background:
-                    i === 0
-                      ? "var(--bg)"
-                      : `linear-gradient(110deg, var(--bg) 0%, color-mix(in srgb, ${ACCENTS[i]} 7%, var(--bg)) 100%)`,
+                  background: `linear-gradient(110deg, transparent 0%, color-mix(in srgb, ${ACCENTS[i]} 5%, transparent) 100%)`,
                 }}
               >
                 {/* huge watermark number */}
