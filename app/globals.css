@@ -96,9 +96,29 @@ html.lenis body {
   height: 0;
 }
 
-/* ────────────────────────── Persian numerals refinement ────────────────────────── */
+/* ────────────────────────── Reveal animation (case card expand) ────────────────────────── */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ────────────────────────── Persian numerals ──────────────────────────
+   Vazirmatn ships Persian digits as an OpenType stylistic set (ss01).
+   Enable it globally for fa locale so "02 / 04" renders as "۰۲ / ۰۴". */
+html[lang="fa"] {
+  font-feature-settings: "ss01";
+}
+/* Mono utility in fa: switch to Vazirmatn so digits also flip to Persian. */
+html[lang="fa"] .font-mono,
+html[lang="fa"] [class*="font-mono"] {
+  font-family: var(--font-vazirmatn), ui-monospace, monospace;
+  font-feature-settings: "ss01";
+  font-variant-numeric: tabular-nums;
+}
+/* .nums-en used to opt-out to Latin; user wants ALL digits Persian in fa,
+   so keep ss01 active even on .nums-en. */
 html[lang="fa"] .nums-en {
-  font-feature-settings: "ss02";
+  font-feature-settings: "ss01";
 }
 
 /* ────────────────────────── Kicker ────────────────────────── */

@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "aicon-static",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "out", "-l", "8765"],
+      "port": 8765
     }
   ]
 }

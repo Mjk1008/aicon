@@ -26,31 +26,116 @@
   },
   "verticals": {
     "kicker": "Our verticals",
-    "title": "Four places AI actually moves the needle.",
+    "title": "Four functions. Six products. All built, all shipped.",
+    "labels": {
+      "problem": "Problem",
+      "approach": "Approach",
+      "tool": "Tool",
+      "impact": "Impact",
+      "tapToFocus": "Tap to focus"
+    },
     "items": [
       {
         "name": "Marketing",
-        "metric": "8 hrs → 40 min",
-        "body": "Content production, audience-grade personalization, behavior analytics, campaign optimization — agents that work alongside your marketing team.",
-        "keywords": ["Content", "Personalization", "Behavior", "Campaigns", "Brand voice", "A/B testing"]
+        "tagline": "Two in-house products, 30+ enterprise clients.",
+        "cases": [
+          {
+            "name": "BB",
+            "longName": "Black Box",
+            "tagline": "Brief in. Interactive digital billboard out.",
+            "problem": "Building HTML5 digital billboards — Iran's highest-impact display ad format — used to take weeks of design and dev per campaign.",
+            "approach": "An engine that ingests a campaign brief and outputs a complete interactive HTML5 digital billboard, ready to ship.",
+            "tool": "BB engine — shipped to production in one month.",
+            "impact": [
+              { "v": "-90%", "l": "production cost" },
+              { "v": "10×", "l": "delivery speed" },
+              { "v": "30+", "l": "enterprise clients" }
+            ]
+          },
+          {
+            "name": "Ad Builder",
+            "longName": "Ad Builder",
+            "tagline": "Generative creative for design teams.",
+            "problem": "Design teams burned hours customizing creatives per client. At scale, the bottleneck collapsed everything else.",
+            "approach": "Pipeline that generates transparent images and videos with generative models, then auto-optimizes prompts based on what's working.",
+            "tool": "Ad Builder — generation + transparency + learning loop.",
+            "impact": [
+              { "v": "-60%", "l": "production cost" },
+              { "v": "5×", "l": "delivery speed" },
+              { "v": "auto", "l": "prompt optimization" }
+            ]
+          }
+        ]
       },
       {
         "name": "Sales",
-        "metric": "2× conversion",
-        "body": "Lead scoring, outreach automation, CRM enrichment, call analysis. Reps spend more time closing, less time filling fields.",
-        "keywords": ["Lead scoring", "Outreach", "CRM", "Call analysis", "Forecast", "Objections"]
+        "tagline": "30-hour deck, down to under an hour.",
+        "cases": [
+          {
+            "name": "AutoPro",
+            "longName": "AutoPro",
+            "tagline": "Personalized B2B proposals, in minutes.",
+            "problem": "Every custom B2B proposal cost a sales rep ~30 hours of PowerPoint work. Visual quality was inconsistent, sales cycle dragged.",
+            "approach": "Replaced PowerPoint with an interactive visual output. Brief in, fully personalized presentation out.",
+            "tool": "AutoPro — proposal automation pipeline.",
+            "impact": [
+              { "v": "<1h", "l": "from 30h per deck" },
+              { "v": "-95%", "l": "production cost" },
+              { "v": "10×", "l": "throughput" }
+            ]
+          }
+        ]
       },
       {
         "name": "Operations",
-        "metric": "70% less manual work",
-        "body": "Process automation, document processing, quality control, predictive maintenance. Repetitive work taken off human shoulders.",
-        "keywords": ["Automation", "Documents", "Quality", "Maintenance", "Inventory", "Scheduling"]
+        "tagline": "Campaign ops, fully automated.",
+        "cases": [
+          {
+            "name": "Campaign Analyst",
+            "longName": "Campaign Analyst",
+            "tagline": "Continuous campaign analysis with prioritized actions.",
+            "problem": "Manual campaign analysis was slow, partial, or skipped entirely. ROAS suffered for clients and for us.",
+            "approach": "A tool that reviews every active campaign hourly and daily, then ranks recommended actions by expected impact.",
+            "tool": "Campaign Analyst — continuous analysis loop.",
+            "impact": [
+              { "v": "10×", "l": "analysis throughput" },
+              { "v": "↑ ROAS", "l": "client + Yektanet" },
+              { "v": "24/7", "l": "monitoring" }
+            ]
+          },
+          {
+            "name": "Campaign Builder",
+            "longName": "Campaign Builder",
+            "tagline": "From 2 hours to 2 minutes.",
+            "problem": "Setting up campaigns across ad panels took ~2 hours per campaign manager — slow, error-prone, doesn't scale.",
+            "approach": "End-to-end automation for campaign setup across panels.",
+            "tool": "Campaign Builder.",
+            "impact": [
+              { "v": "2 min", "l": "from 2 hours" },
+              { "v": "-90%", "l": "cost per campaign" },
+              { "v": "10-20×", "l": "throughput" }
+            ]
+          }
+        ]
       },
       {
         "name": "Human Resources",
-        "metric": "5× hiring speed",
-        "body": "Screening, onboarding, performance analytics, personalized L&D. HR focuses on people, not paperwork.",
-        "keywords": ["Screening", "Onboarding", "Performance", "L&D", "Feedback", "Matching"]
+        "tagline": "Performance reviews, structured and fast.",
+        "cases": [
+          {
+            "name": "Perf Pulse",
+            "longName": "Performance Pulse",
+            "tagline": "360° performance reviews, automated and bias-checked.",
+            "problem": "Performance reviews used to be slow, subjective, paperwork-heavy. HR spent the cycle collecting data instead of coaching people.",
+            "approach": "Tool that combines project output, 360° peer feedback, and OKR data into a structured, bias-checked review per cycle.",
+            "tool": "Perf Pulse — performance review automation.",
+            "impact": [
+              { "v": "80%", "l": "less HR time" },
+              { "v": "bias-checked", "l": "output" },
+              { "v": "360°", "l": "data sources" }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -78,11 +163,6 @@
       { "n": "03", "title": "Build", "body": "Implementation, with your team. Data plumbing, agents, integrations." },
       { "n": "04", "title": "Operate", "body": "Monthly retainer to maintain, iterate, scale — for as long as you need." }
     ]
-  },
-  "proof": {
-    "kicker": "Our story",
-    "title": "We tested it on ourselves first.",
-    "body": "Our team automated 90% of its internal processes with AI. Now we bring the same playbook to yours."
   },
   "cta": {
     "kicker": "Next step",

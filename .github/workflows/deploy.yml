@@ -1,0 +1,55 @@
+name: Deploy to Arvan
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build (next export)
+        run: npm run build
+
+      - name: Install AWS CLI
+        run: |
+          curl -sSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscli.zip
+          unzip -q /tmp/awscli.zip -d /tmp
+          sudo /tmp/aws/install --update
+          aws --version
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_ACCESS_KEY }}
+          BUCKET: ${{ vars.ARVAN_BUCKET || 'aicon-landing' }}
+          ENDPOINT: ${{ vars.ARVAN_ENDPOINT || 'https://s3.ir-thr-at1.arvanstorage.ir' }}
+          SKIP_BUILD: "1"
+        run: ./scripts/deploy.sh
+
+      - name: Smoke test
+        run: |
+          URL="https://${{ vars.ARVAN_BUCKET || 'aicon-landing' }}.s3-website.ir-thr-at1.arvanstorage.ir"
+          set -e
+          for path in "/" "/fa/" "/en/"; do
+            code=$(curl -sI --max-time 15 -o /dev/null -w '%{http_code}' "$URL$path")
+            echo "$code  $URL$path"
+            if [[ "$code" != "200" ]]; then echo "✗ unexpected status"; exit 1; fi
+          done
