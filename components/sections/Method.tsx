@@ -64,15 +64,15 @@ export function Method() {
           <MaskedText text={t("title")} />
         </h2>
 
-        <div className="relative pl-8 md:pl-16">
+        <div className="relative ps-8 md:ps-16">
           <div
-            className="method-line absolute top-0 bottom-0 left-0 md:left-4 w-px"
+            className="method-line absolute top-0 bottom-0 start-0 md:start-4 w-px"
             style={{ background: "var(--accent)" }}
           />
           {steps.map((step, i) => (
             <div key={i} className="method-row relative pb-16 last:pb-0">
               <div
-                className="absolute -left-[1.65rem] md:-left-[1.65rem] top-2 w-3 h-3 rounded-full"
+                className="absolute -start-[1.65rem] md:-start-[1.65rem] top-2 w-3 h-3 rounded-full"
                 style={{
                   background: "var(--accent)",
                   boxShadow: "0 0 40px var(--accent)",

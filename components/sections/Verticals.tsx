@@ -231,10 +231,10 @@ export function Verticals() {
 
         {/* top overlay */}
         <div className="absolute top-0 inset-x-0 z-10 pointer-events-none px-6 md:px-16 py-8">
-          <div className="max-w-7xl mx-auto flex items-baseline justify-between">
-            <p className="kicker">{t("kicker")}</p>
+          <div className="max-w-7xl mx-auto flex items-baseline justify-between gap-4">
+            <p className="kicker shrink-0">{t("kicker")}</p>
             <p
-              className="text-xs font-mono uppercase tracking-[0.18em] max-w-md text-end"
+              className="hidden md:block text-xs font-mono uppercase tracking-[0.18em] max-w-md text-end"
               style={{ color: "var(--fg-muted)" }}
             >
               <MaskedText text={t("title")} eager />
@@ -287,70 +287,94 @@ function CaseCard({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       aria-expanded={isFocused}
-      className={`group relative block text-start w-full overflow-hidden rounded-2xl cursor-pointer ${
-        isDimmed ? "opacity-50 scale-[0.985]" : "opacity-100"
+      className={`group relative block text-start w-full overflow-hidden cursor-pointer ${
+        isDimmed ? "opacity-40" : "opacity-100"
       }`}
       style={{
         background: solid
-          ? `color-mix(in srgb, var(--bg) 82%, ${accent})`
-          : `color-mix(in srgb, var(--bg) 90%, ${accent} 10%)`,
-        border: `1px solid color-mix(in srgb, ${accent} ${
-          isFocused ? 60 : hover ? 42 : 24
-        }%, transparent)`,
+          ? `color-mix(in srgb, var(--bg) 78%, ${accent})`
+          : `color-mix(in srgb, var(--bg) 92%, ${accent} 8%)`,
         boxShadow: isFocused
-          ? `0 30px 80px -24px color-mix(in srgb, ${accent} 45%, transparent), 0 0 0 1px color-mix(in srgb, ${accent} 25%, transparent) inset`
+          ? `0 40px 90px -28px color-mix(in srgb, ${accent} 45%, transparent)`
           : hover
-          ? `0 14px 50px -28px color-mix(in srgb, ${accent} 35%, transparent)`
+          ? `0 18px 50px -28px color-mix(in srgb, ${accent} 32%, transparent)`
           : "none",
         transition:
-          "transform 500ms var(--ease-house), opacity 400ms var(--ease-house), background 350ms var(--ease-house), border-color 350ms var(--ease-house), box-shadow 400ms var(--ease-house)",
+          "transform 500ms var(--ease-house), opacity 400ms var(--ease-house), background 350ms var(--ease-house), box-shadow 400ms var(--ease-house)",
       }}
     >
-      {/* COMPACT BLOCK — always visible */}
-      <div className="p-5 md:p-6">
-        <div className="flex items-baseline justify-between gap-3 mb-2.5">
-          <h4 className="text-xl md:text-2xl font-medium tracking-tight">
-            <span style={{ color: accent }}>{c.name}</span>
-            {c.longName && c.longName !== c.name && (
-              <span
-                className="text-sm font-mono ms-2"
-                style={{ color: "var(--fg-muted)" }}
-              >
-                · {c.longName}
-              </span>
-            )}
-          </h4>
+      {/* Corner registration marks (4× absolute brackets) */}
+      <CornerMark pos="tl" accent={accent} active={solid} />
+      <CornerMark pos="tr" accent={accent} active={solid} />
+      <CornerMark pos="bl" accent={accent} active={solid} />
+      <CornerMark pos="br" accent={accent} active={solid} />
+
+      {/* Diagonal accent sheen — subtle */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `linear-gradient(125deg, transparent 35%, color-mix(in srgb, ${accent} ${
+            solid ? 7 : 3
+          }%, transparent) 50%, transparent 65%)`,
+          transition: "background 500ms var(--ease-house)",
+        }}
+      />
+
+      {/* COMPACT BLOCK */}
+      <div className="relative p-5 md:p-7">
+        {/* Top tag bar — like a stamped serial */}
+        <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] mb-5 md:mb-6">
+          <span style={{ color: accent }} dir="ltr">
+            [ {c.name.toUpperCase()} ]
+          </span>
           <span
             aria-hidden
-            className="text-xs font-mono opacity-60 group-hover:opacity-100 transition-opacity nums-en flex items-center gap-1.5"
-            style={{ color: accent }}
+            className="inline-block transition-transform duration-500 text-base leading-none"
+            style={{
+              color: accent,
+              transform: isFocused ? "rotate(225deg)" : "rotate(0deg)",
+            }}
           >
-            <span className="hidden md:inline" style={{ color: "var(--fg-muted)" }}>
-              {isFocused ? "esc" : labels.tapToFocus}
-            </span>
-            <span className="text-base leading-none">
-              {isFocused ? "−" : "+"}
-            </span>
+            ↗
           </span>
         </div>
 
-        <p
-          className="text-sm md:text-base leading-relaxed"
+        {/* Product name (long) */}
+        <h4
+          className="text-2xl md:text-[1.75rem] leading-[1.05] font-medium tracking-tight"
           style={{ color: "var(--fg)" }}
+        >
+          {c.longName}
+        </h4>
+
+        {/* Tagline */}
+        <p
+          className="mt-2 text-sm md:text-[15px] leading-relaxed"
+          style={{ color: "var(--fg-muted)" }}
         >
           {c.tagline}
         </p>
 
-        {/* HERO METRIC — the one big number */}
-        <div className="mt-4 md:mt-5 flex items-end gap-3">
+        {/* Hairline divider */}
+        <div
+          className="my-5 md:my-6 h-px"
+          style={{
+            background: `linear-gradient(to right, color-mix(in srgb, ${accent} 30%, transparent), transparent)`,
+          }}
+        />
+
+        {/* HERO METRIC — large + label */}
+        <div className="flex items-baseline justify-between gap-3">
           <div
-            className="text-[clamp(2.25rem,4.5vw,3.5rem)] leading-[0.9] font-medium tracking-tighter nums-en"
+            className="text-[clamp(2.5rem,5vw,3.75rem)] leading-[0.85] font-light tracking-[-0.04em] nums-en"
             style={{ color: accent }}
+            dir="ltr"
           >
             {hero.v}
           </div>
           <div
-            className="pb-1.5 text-[11px] uppercase tracking-[0.16em] leading-tight max-w-[14ch]"
+            className="text-[10px] font-mono uppercase tracking-[0.22em] text-end max-w-[12ch] leading-tight pb-1"
             style={{ color: "var(--fg-muted)" }}
           >
             {hero.l}
@@ -361,51 +385,78 @@ function CaseCard({
       {/* EXPANDABLE DETAIL */}
       {isFocused && (
         <div
-          className="px-5 md:px-6 pb-5 md:pb-6 pt-4 max-h-[52vh] overflow-y-auto animate-[reveal_400ms_var(--ease-house)]"
+          className="relative px-5 md:px-7 pb-5 md:pb-7 max-h-[48vh] overflow-y-auto animate-[reveal_400ms_var(--ease-house)]"
           style={{
-            borderTop: `1px dashed color-mix(in srgb, ${accent} 28%, transparent)`,
             scrollbarWidth: "thin",
             scrollbarColor: `color-mix(in srgb, ${accent} 40%, transparent) transparent`,
           }}
         >
+          {/* divider above detail */}
           <div
-            className="space-y-3 text-[13px] md:text-sm leading-[1.6] mt-3"
-            style={{ color: "var(--fg)" }}
-          >
-            <DetailRow label={labels.problem} accent={accent}>
-              {c.problem}
-            </DetailRow>
-            <DetailRow label={labels.approach} accent={accent}>
-              {c.approach}
-            </DetailRow>
-            <DetailRow label={labels.tool} accent={accent}>
+            className="h-px mb-5"
+            style={{
+              background: `repeating-linear-gradient(to right, color-mix(in srgb, ${accent} 50%, transparent) 0 6px, transparent 6px 12px)`,
+            }}
+          />
+
+          <DetailBlock label={labels.problem} accent={accent}>
+            {c.problem}
+          </DetailBlock>
+          <DetailBlock label={labels.approach} accent={accent}>
+            {c.approach}
+          </DetailBlock>
+
+          {/* Tool — framed chip */}
+          <div className="mt-5">
+            <SpecLabel accent={accent}>{labels.tool}</SpecLabel>
+            <div
+              className="inline-flex items-center gap-2 mt-2 px-3 py-1.5 text-[13px] md:text-sm"
+              dir="ltr"
+              style={{
+                border: `1px solid color-mix(in srgb, ${accent} 40%, transparent)`,
+                color: "var(--fg)",
+              }}
+            >
+              <span
+                aria-hidden
+                style={{ color: accent }}
+                className="font-mono text-[10px]"
+              >
+                ▸
+              </span>
               {c.tool}
-            </DetailRow>
+            </div>
           </div>
 
-          <div
-            className="mt-4 pt-4"
-            style={{
-              borderTop: `1px solid color-mix(in srgb, ${accent} 18%, transparent)`,
-            }}
-          >
+          {/* Impact ledger — gridded with internal borders */}
+          <div className="mt-6">
+            <SpecLabel accent={accent}>{labels.impact}</SpecLabel>
             <div
-              className="text-[10px] font-mono uppercase tracking-[0.18em] mb-2"
-              style={{ color: accent }}
+              className="mt-3 grid grid-cols-3"
+              style={{
+                border: `1px solid color-mix(in srgb, ${accent} 28%, transparent)`,
+              }}
             >
-              {labels.impact}
-            </div>
-            <div className="grid grid-cols-3 gap-3">
               {c.impact.map((m, mi) => (
-                <div key={mi}>
+                <div
+                  key={mi}
+                  className="p-3"
+                  style={{
+                    borderInlineEnd:
+                      mi < c.impact.length - 1
+                        ? `1px solid color-mix(in srgb, ${accent} 22%, transparent)`
+                        : "none",
+                  }}
+                >
                   <div
                     className="text-base md:text-lg font-medium tracking-tight nums-en leading-tight"
                     style={{ color: "var(--fg)" }}
+                    dir="ltr"
                   >
                     {m.v}
                   </div>
                   <div
-                    className="text-[10px] uppercase tracking-[0.12em] mt-0.5 leading-tight"
+                    className="text-[10px] uppercase tracking-[0.14em] mt-1.5 leading-tight"
                     style={{ color: "var(--fg-muted)" }}
                   >
                     {m.l}
@@ -420,7 +471,29 @@ function CaseCard({
   );
 }
 
-function DetailRow({
+function SpecLabel({
+  accent,
+  children,
+}: {
+  accent: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="font-mono text-[10px] uppercase tracking-[0.24em] flex items-center gap-2"
+      style={{ color: accent }}
+    >
+      <span
+        aria-hidden
+        className="inline-block h-px w-3"
+        style={{ background: accent }}
+      />
+      <span>{children}</span>
+    </div>
+  );
+}
+
+function DetailBlock({
   label,
   accent,
   children,
@@ -430,14 +503,52 @@ function DetailRow({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="mt-5 first:mt-0">
+      <SpecLabel accent={accent}>{label}</SpecLabel>
       <div
-        className="text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5"
-        style={{ color: accent }}
+        className="mt-2 text-[13px] md:text-sm leading-[1.7]"
+        style={{ color: "var(--fg)" }}
       >
-        {label}
+        {children}
       </div>
-      <div style={{ color: "var(--fg)" }}>{children}</div>
     </div>
   );
+}
+
+/**
+ * Corner registration mark — small L-shaped bracket at a card corner.
+ * On focus/hover the mark grows; gives the card a stamped / blueprint feel.
+ */
+function CornerMark({
+  pos,
+  accent,
+  active,
+}: {
+  pos: "tl" | "tr" | "bl" | "br";
+  accent: string;
+  active: boolean;
+}) {
+  const v = pos[0]; // 't' | 'b'
+  const h = pos[1]; // 'l' | 'r'  (logical left/right inside card)
+  const size = active ? 18 : 11;
+  const style: React.CSSProperties = {
+    position: "absolute",
+    width: size,
+    height: size,
+    pointerEvents: "none",
+    transition:
+      "width 400ms var(--ease-house), height 400ms var(--ease-house), border-color 400ms var(--ease-house)",
+    borderColor: `color-mix(in srgb, ${accent} ${active ? 90 : 55}%, transparent)`,
+    borderStyle: "solid",
+    borderWidth: 0,
+  };
+  if (v === "t") style.top = 0;
+  else style.bottom = 0;
+  if (h === "l") style.insetInlineStart = 0;
+  else style.insetInlineEnd = 0;
+  if (v === "t") style.borderTopWidth = 1;
+  else style.borderBottomWidth = 1;
+  if (h === "l") style.borderInlineStartWidth = 1;
+  else style.borderInlineEndWidth = 1;
+  return <span aria-hidden style={style} />;
 }

@@ -17,10 +17,17 @@ export function useCanvasGate({ eager = false }: { eager?: boolean } = {}) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const narrow = window.innerWidth < 768;
+    // Respect accessibility opt-out only.
+    // Modern phones run R3F fine, and the bg vignette stays visible if the
+    // canvas drops frames — so we no longer gate on viewport width or core
+    // count.
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const slowCPU = (navigator.hardwareConcurrency ?? 4) < 4;
-    if (narrow || reduced || slowCPU) return;
+    if (reduced) return;
+
+    // WebGL capability sanity check — bail only if the browser truly can't.
+    const probe = document.createElement("canvas");
+    const hasWebGL = !!(probe.getContext("webgl2") || probe.getContext("webgl"));
+    if (!hasWebGL) return;
 
     let id: number | undefined;
     const fire = () => setOk(true);

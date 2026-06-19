@@ -59,7 +59,7 @@ export function Outcome() {
             >
               {/* chrono ring sits top-right, ticks in on enter */}
               <div
-                className="absolute top-6 right-6"
+                className="absolute top-6 end-6"
                 style={{ color: "var(--accent)" }}
               >
                 <ChronoRing size={28} strokeWidth={1.5} duration={1500} delay={i * 200 + 300} />
