@@ -73,6 +73,14 @@ export function Verticals() {
 
   useEffect(() => {
     if (!wrapRef.current || !trackRef.current) return;
+    // Skip horizontal-pin scroll on mobile / touch devices — native vertical
+    // stack is far more usable there. The JSX below also drops the
+    // viewport-width sizing on small screens.
+    const isMobile =
+      window.matchMedia("(hover: none), (pointer: coarse)").matches ||
+      window.innerWidth < 768;
+    if (isMobile) return;
+
     const ctx = gsap.context(() => {
       gsap.set(trackRef.current!, { x: 0 });
       const distance = () =>
@@ -126,15 +134,18 @@ export function Verticals() {
           </div>
         </div>
 
-        {/* track */}
+        {/* track — horizontal pin on desktop, vertical stack on mobile */}
         <div
-          className="relative z-[1] h-screen w-screen overflow-hidden"
+          className="relative z-[1] md:h-screen md:w-screen md:overflow-hidden"
           style={{ direction: "ltr" }}
         >
           <div
             ref={trackRef}
-            className="flex h-full"
-            style={{ direction: "ltr", width: `${items.length * 100}vw` }}
+            className="flex flex-col md:flex-row md:h-full"
+            style={{
+              direction: "ltr",
+              ["--panel-count" as string]: items.length,
+            }}
           >
             {items.map((it, pi) => {
               const accent = ACCENTS[pi];
@@ -144,7 +155,7 @@ export function Verticals() {
                 <div
                   key={pi}
                   dir={dir}
-                  className="w-screen h-screen relative shrink-0 px-6 md:px-16 py-12 md:py-20 flex flex-col"
+                  className="w-full md:w-screen min-h-screen md:h-screen relative md:shrink-0 px-5 sm:px-6 md:px-16 pt-24 md:pt-20 pb-16 md:pb-20 flex flex-col"
                   style={{
                     background: `linear-gradient(110deg, transparent 0%, color-mix(in srgb, ${accent} 5%, transparent) 100%)`,
                   }}
@@ -229,12 +240,14 @@ export function Verticals() {
           </div>
         </div>
 
-        {/* top overlay */}
-        <div className="absolute top-0 inset-x-0 z-10 pointer-events-none px-6 md:px-16 py-8">
+        {/* top overlay — desktop-only (panels stack vertically on mobile
+            and each panel has its own header, so a sticky overlay would
+            overlap content there). */}
+        <div className="hidden md:block absolute top-0 inset-x-0 z-10 pointer-events-none px-6 md:px-16 py-8">
           <div className="max-w-7xl mx-auto flex items-baseline justify-between gap-4">
             <p className="kicker shrink-0">{t("kicker")}</p>
             <p
-              className="hidden md:block text-xs font-mono uppercase tracking-[0.18em] max-w-md text-end"
+              className="text-xs font-mono uppercase tracking-[0.18em] max-w-md text-end"
               style={{ color: "var(--fg-muted)" }}
             >
               <MaskedText text={t("title")} eager />
@@ -242,8 +255,8 @@ export function Verticals() {
           </div>
         </div>
 
-        {/* bottom progress segments */}
-        <div className="absolute bottom-6 inset-x-0 z-10 px-6 md:px-16 pointer-events-none">
+        {/* bottom progress segments — only meaningful in the horizontal pin */}
+        <div className="hidden md:block absolute bottom-6 inset-x-0 z-10 px-6 md:px-16 pointer-events-none">
           <div className="max-w-7xl mx-auto flex items-center gap-2">
             {items.map((_, i) => (
               <div

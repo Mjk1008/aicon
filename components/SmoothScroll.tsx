@@ -17,6 +17,16 @@ if (typeof window !== "undefined") {
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
+    // Mobile / touch devices: skip Lenis entirely. Native momentum scroll
+    // is what users expect on touch, and Lenis fights with GSAP-pinned
+    // sections on those devices.
+    const isTouchOrNarrow =
+      typeof window === "undefined"
+        ? false
+        : window.matchMedia("(hover: none), (pointer: coarse)").matches ||
+          window.innerWidth < 768;
+    if (isTouchOrNarrow) return;
+
     const lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
