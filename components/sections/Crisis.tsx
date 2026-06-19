@@ -35,7 +35,7 @@ export function Crisis() {
       ref={ref}
       data-theme="symptom"
       id="crisis"
-      className="relative py-32 md:py-48 px-6 md:px-16"
+      className="relative py-24 md:py-48 px-5 sm:px-6 md:px-16"
     >
       <div className="max-w-6xl mx-auto relative">
         <p className="kicker mb-8">{t("kicker")}</p>

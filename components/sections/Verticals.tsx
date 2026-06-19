@@ -155,7 +155,7 @@ export function Verticals() {
                 <div
                   key={pi}
                   dir={dir}
-                  className="w-full md:w-screen min-h-screen md:h-screen relative md:shrink-0 px-5 sm:px-6 md:px-16 pt-24 md:pt-20 pb-16 md:pb-20 flex flex-col"
+                  className="w-full md:w-screen min-h-screen md:h-screen relative md:shrink-0 overflow-hidden px-5 sm:px-6 md:px-16 pt-24 md:pt-20 pb-16 md:pb-20 flex flex-col"
                   style={{
                     background: `linear-gradient(110deg, transparent 0%, color-mix(in srgb, ${accent} 5%, transparent) 100%)`,
                   }}

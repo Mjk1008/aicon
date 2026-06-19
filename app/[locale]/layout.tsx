@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter, Vazirmatn } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -9,18 +8,6 @@ import { GradientBlobs } from "@/components/primitives/GradientBlobs";
 import { ThemeArc } from "@/components/primitives/ThemeArc";
 import { Cursor } from "@/components/primitives/Cursor";
 import "../globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const vazirmatn = Vazirmatn({
-  variable: "--font-vazirmatn",
-  subsets: ["arabic", "latin"],
-  display: "swap",
-});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -78,11 +65,7 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
   const dir = locale === "fa" ? "rtl" : "ltr";
 
   return (
-    <html
-      lang={locale}
-      dir={dir}
-      className={`${inter.variable} ${vazirmatn.variable}`}
-    >
+    <html lang={locale} dir={dir}>
       <body data-theme="arrival">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Cursor />

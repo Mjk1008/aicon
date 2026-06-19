@@ -56,7 +56,7 @@ export function Method() {
       ref={ref}
       data-theme="method"
       id="process"
-      className="relative py-32 md:py-40 px-6 md:px-16"
+      className="relative py-24 md:py-40 px-5 sm:px-6 md:px-16"
     >
       <div className="max-w-5xl mx-auto">
         <p className="kicker mb-6">{t("kicker")}</p>

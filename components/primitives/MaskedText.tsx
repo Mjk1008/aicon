@@ -27,7 +27,7 @@ export function MaskedText({
   as: As = "span",
   className = "",
   eager = false,
-  threshold = 0.2,
+  threshold = 0.05,
   stagger = 0.04,
   trailing,
 }: Props) {
@@ -47,7 +47,7 @@ export function MaskedText({
           }
         }
       },
-      { threshold }
+      { threshold, rootMargin: "0px 0px -8% 0px" }
     );
     obs.observe(el);
     return () => obs.disconnect();

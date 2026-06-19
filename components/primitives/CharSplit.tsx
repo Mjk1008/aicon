@@ -27,7 +27,7 @@ export function CharSplit({
   className = "",
   stagger = 0.022,
   duration = 0.9,
-  threshold = 0.3,
+  threshold = 0.05,
   eager = false,
   locale,
 }: Props) {
@@ -42,7 +42,7 @@ export function CharSplit({
       (entries) => {
         for (const e of entries) if (e.isIntersecting) { setRevealed(true); obs.disconnect(); }
       },
-      { threshold }
+      { threshold, rootMargin: "0px 0px -8% 0px" }
     );
     obs.observe(el);
     return () => obs.disconnect();

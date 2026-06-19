@@ -1,5 +1,38 @@
 @import "tailwindcss";
 
+/* ────────────────────────── Self-hosted fonts ──────────────────────────
+   Inter (Latin) + Vazirmatn (Arabic/Persian). Vazirmatn has Persian
+   numerals via the ss01 stylistic set (enabled per-locale below).
+   Local woff2 files avoid the fonts.gstatic.com block from Iran. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/Inter-Variable.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "Vazirmatn";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Vazirmatn-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Vazirmatn";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Vazirmatn-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Vazirmatn";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Vazirmatn-Bold.woff2") format("woff2");
+}
+
 @theme {
   /* Base palette tokens */
   --color-ink: #050507;
@@ -28,8 +61,8 @@
   --my: 0.5;
 
   /* Fonts */
-  --font-sans-en: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-sans-fa: var(--font-vazirmatn), ui-sans-serif, system-ui, sans-serif;
+  --font-sans-en: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans-fa: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* THE HOUSE EASING. Used everywhere. Single brand fingerprint. */
@@ -111,7 +144,7 @@ html[lang="fa"] {
 /* Mono utility in fa: switch to Vazirmatn so digits also flip to Persian. */
 html[lang="fa"] .font-mono,
 html[lang="fa"] [class*="font-mono"] {
-  font-family: var(--font-vazirmatn), ui-monospace, monospace;
+  font-family: "Vazirmatn", ui-monospace, monospace;
   font-feature-settings: "ss01";
   font-variant-numeric: tabular-nums;
 }

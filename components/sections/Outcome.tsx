@@ -39,7 +39,7 @@ export function Outcome() {
     <section
       ref={ref}
       data-theme="outcome"
-      className="relative py-32 md:py-44 px-6 md:px-16"
+      className="relative py-24 md:py-44 px-5 sm:px-6 md:px-16"
     >
       <div className="max-w-7xl mx-auto">
         <p className="kicker mb-6">{t("kicker")}</p>
@@ -54,29 +54,29 @@ export function Outcome() {
           {items.map((it, i) => (
             <div
               key={i}
-              className="metric-cell p-8 md:p-12 relative"
+              className="metric-cell p-5 sm:p-6 md:p-12 relative"
               style={{ background: "var(--bg)" }}
             >
-              {/* chrono ring sits top-right, ticks in on enter */}
+              {/* chrono ring sits top-end, ticks in on enter */}
               <div
-                className="absolute top-6 end-6"
+                className="absolute top-4 end-4 md:top-6 md:end-6"
                 style={{ color: "var(--accent)" }}
               >
-                <ChronoRing size={28} strokeWidth={1.5} duration={1500} delay={i * 200 + 300} />
+                <ChronoRing size={24} strokeWidth={1.5} duration={1500} delay={i * 200 + 300} />
               </div>
 
               {/* char-split metric value — forced LTR so split spans don't
                   flip on RTL pages */}
               <div
                 dir="ltr"
-                className="text-[clamp(3.5rem,8vw,7rem)] leading-none font-medium tracking-tighter nums-en text-start"
+                className="text-[clamp(2.5rem,10vw,7rem)] leading-none font-medium tracking-tighter nums-en text-start"
                 style={{ color: "var(--accent)" }}
               >
                 <CharSplit text={it.value} stagger={0.05} duration={1.1} />
               </div>
 
               <p
-                className="mt-6 text-sm md:text-base leading-relaxed"
+                className="mt-4 md:mt-6 text-sm md:text-base leading-relaxed"
                 style={{ color: "var(--fg-muted)" }}
               >
                 {it.label}
