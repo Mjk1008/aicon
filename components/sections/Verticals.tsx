@@ -300,9 +300,9 @@ function CaseCard({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       aria-expanded={isFocused}
-      className={`group relative block text-start w-full overflow-hidden cursor-pointer ${
-        isDimmed ? "opacity-40" : "opacity-100"
-      }`}
+      className={`group relative text-start w-full overflow-hidden cursor-pointer flex flex-col ${
+        isDimmed ? "hidden md:flex md:opacity-40" : "flex opacity-100"
+      } ${isFocused ? "max-h-[calc(100svh-15rem)] md:max-h-none" : ""}`}
       style={{
         background: solid
           ? `color-mix(in srgb, var(--bg) 78%, ${accent})`
@@ -398,7 +398,7 @@ function CaseCard({
       {/* EXPANDABLE DETAIL */}
       {isFocused && (
         <div
-          className="relative px-5 md:px-7 pb-5 md:pb-7 max-h-[48vh] overflow-y-auto animate-[reveal_400ms_var(--ease-house)]"
+          className="relative px-5 md:px-7 pb-5 md:pb-7 flex-1 min-h-0 md:max-h-[48vh] overflow-y-auto animate-[reveal_400ms_var(--ease-house)]"
           style={{
             scrollbarWidth: "thin",
             scrollbarColor: `color-mix(in srgb, ${accent} 40%, transparent) transparent`,
