@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MaskedText } from "@/components/primitives/MaskedText";
 import { useCanvasGate } from "@/lib/useCanvasGate";
+import { localizeDigits } from "@/lib/text";
 
 const ReductionMesh = dynamic(
   () => import("@/components/scenes/ReductionMesh").then((m) => m.ReductionMesh),
@@ -143,7 +144,7 @@ export function Verticals() {
                 >
                   {/* watermark number */}
                   <div
-                    className="absolute pointer-events-none select-none nums-en font-medium leading-none tracking-tighter"
+                    className="absolute pointer-events-none select-none font-medium leading-none tracking-tighter"
                     style={{
                       color: accent,
                       opacity: 0.05,
@@ -152,17 +153,18 @@ export function Verticals() {
                       bottom: "-8vh",
                     }}
                   >
-                    {String(pi + 1).padStart(2, "0")}
+                    {localizeDigits(String(pi + 1).padStart(2, "0"), locale)}
                   </div>
 
                   {/* Panel header */}
                   <div className="relative max-w-7xl mx-auto w-full">
                     <div
-                      className="text-xs font-mono uppercase tracking-[0.2em] mb-4 nums-en flex items-center gap-3"
+                      className="text-xs font-mono uppercase tracking-[0.2em] mb-4 flex items-center gap-3"
                       style={{ color: accent }}
                     >
                       <span>
-                        {String(pi + 1).padStart(2, "0")} / 0{panelCount}
+                        {localizeDigits(String(pi + 1).padStart(2, "0"), locale)}{" / "}
+                        {localizeDigits(`0${panelCount}`, locale)}
                       </span>
                       <span
                         className="h-px flex-1 max-w-24"

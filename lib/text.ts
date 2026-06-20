@@ -16,3 +16,13 @@ export function graphemes(input: string, locale = "en"): string[] {
 export function tokensWithSpaces(input: string): string[] {
   return input.split(/(\s+)/).filter(Boolean);
 }
+
+const FA_DIGITS = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+/** Convert Latin digits (0-9) to Persian (۰-۹). Pass-through for other chars. */
+export function toFaDigits(input: string | number): string {
+  return String(input).replace(/[0-9]/g, (d) => FA_DIGITS[+d]);
+}
+/** Convert digits to the locale-appropriate script. */
+export function localizeDigits(input: string | number, locale: string): string {
+  return locale === "fa" ? toFaDigits(input) : String(input);
+}

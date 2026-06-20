@@ -1,13 +1,15 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MaskedText } from "@/components/primitives/MaskedText";
+import { localizeDigits } from "@/lib/text";
 
 export function Crisis() {
   const t = useTranslations("crisis");
+  const locale = useLocale();
   const ref = useRef<HTMLElement>(null);
   const numRef = useRef<HTMLSpanElement>(null);
   const title = t("title");
@@ -16,6 +18,8 @@ export function Crisis() {
   const m = title.match(/(\d+%|۹۵٪|95%)/);
   const numStr = m ? m[0] : "95%";
   const tail = title.replace(numStr, "").trim().replace(/^[.,،]/, "").trim();
+  // Show the percent glyph that matches the locale.
+  const percent = locale === "fa" ? "٪" : "%";
 
   useEffect(() => {
     if (!ref.current || !numRef.current) return;
@@ -25,10 +29,13 @@ export function Crisis() {
       duration: 1.6,
       ease: "power3.out",
       scrollTrigger: { trigger: ref.current, start: "top 70%", toggleActions: "play none none reverse" },
-      onUpdate: () => { if (numRef.current) numRef.current.textContent = Math.round(obj.val).toString(); },
+      onUpdate: () => {
+        if (numRef.current)
+          numRef.current.textContent = localizeDigits(Math.round(obj.val), locale);
+      },
     });
     return () => { tween.scrollTrigger?.kill(); tween.kill(); };
-  }, []);
+  }, [locale]);
 
   return (
     <section
@@ -41,10 +48,11 @@ export function Crisis() {
         <p className="kicker mb-8">{t("kicker")}</p>
         <h2 className="text-[clamp(2.5rem,7vw,6rem)] leading-[1] font-medium tracking-tight max-w-5xl">
           <span
-            className="nums-en inline-block"
+            className="inline-block"
             style={{ color: "var(--signal)" }}
+            dir="ltr"
           >
-            <span ref={numRef}>0</span>%
+            <span ref={numRef}>{localizeDigits(0, locale)}</span>{percent}
           </span>{" "}
           <MaskedText as="span" text={tail} stagger={0.04} />
         </h2>

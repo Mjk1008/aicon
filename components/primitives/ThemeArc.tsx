@@ -14,7 +14,11 @@ export function ThemeArc() {
     let current = "arrival";
 
     const update = () => {
-      const sections = document.querySelectorAll<HTMLElement>("[data-theme]");
+      // Only real chapter <section> nodes — exclude body which carries
+      // a static data-theme="arrival" used as the initial seed.
+      const sections = document.querySelectorAll<HTMLElement>(
+        "section[data-theme]"
+      );
       if (!sections.length) return;
       const center = window.innerHeight * 0.45;
       let best: { theme: string; dist: number } | null = null;
@@ -28,6 +32,10 @@ export function ThemeArc() {
       });
       if (best && (best as { theme: string }).theme !== current) {
         current = (best as { theme: string }).theme;
+        // Body carries the static seed and wins over html in the cascade,
+        // so update both — body for the actual override, html so any
+        // selector keyed on `html[data-theme]` still works.
+        document.body.setAttribute("data-theme", current);
         document.documentElement.setAttribute("data-theme", current);
       }
     };
