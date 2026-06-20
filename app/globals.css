@@ -75,6 +75,16 @@
   color-scheme: dark;
 }
 
+html,
+body {
+  /* Hard-clip horizontal overflow — RTL renders an unwanted ~40px scroll
+     band on mobile because a few fixed/absolute decorations (blob blur,
+     panel watermarks) creep past the logical end. Clipping at the
+     document root keeps every section flush to the viewport. */
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 html {
   background: var(--bg);
   color: var(--fg);
