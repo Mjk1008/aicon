@@ -1,4 +1,4 @@
-name: Deploy to Arvan
+name: Deploy to Liara
 
 on:
   push:
@@ -28,26 +28,31 @@ jobs:
       - name: Build (next export)
         run: npm run build
 
-      - name: Install AWS CLI
-        run: |
-          curl -sSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscli.zip
-          unzip -q /tmp/awscli.zip -d /tmp
-          sudo /tmp/aws/install --update
-          aws --version
+      - name: Install Liara CLI
+        run: npm i -g @liara/cli
 
       - name: Deploy
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_ACCESS_KEY }}
-          BUCKET: ${{ vars.ARVAN_BUCKET || 'aicon-landing' }}
-          ENDPOINT: ${{ vars.ARVAN_ENDPOINT || 'https://s3.ir-thr-at1.arvanstorage.ir' }}
-          SKIP_BUILD: "1"
-        run: ./scripts/deploy.sh
+          LIARA_API_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+        run: |
+          cd out
+          liara deploy \
+            --app "${{ vars.LIARA_APP || 'aicon' }}" \
+            --platform static \
+            -b "${{ vars.LIARA_LOCATION || 'iran' }}" \
+            --no-app-logs \
+            --detach \
+            --api-token "$LIARA_API_TOKEN"
 
       - name: Smoke test
         run: |
-          URL="https://${{ vars.ARVAN_BUCKET || 'aicon-landing' }}.s3-website.ir-thr-at1.arvanstorage.ir"
+          URL="https://${{ vars.LIARA_APP || 'aicon' }}.liara.run"
           set -e
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            code=$(curl -sI --max-time 15 -o /dev/null -w '%{http_code}' "$URL/fa/")
+            if [[ "$code" == "200" ]]; then break; fi
+            sleep 10
+          done
           for path in "/" "/fa/" "/en/"; do
             code=$(curl -sI --max-time 15 -o /dev/null -w '%{http_code}' "$URL$path")
             echo "$code  $URL$path"

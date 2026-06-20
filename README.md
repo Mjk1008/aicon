@@ -43,48 +43,39 @@ All copy lives in `messages/fa.json` and `messages/en.json`. Stats backed by ver
 - MIT NANDA GenAI Divide
 - HBR/Profisee 2025
 
-## Deploy — Arvan Object Storage
+## Deploy — Liara
 
-Production lives at <https://aicon-landing.s3-website.ir-thr-at1.arvanstorage.ir>.
+Production lives at <https://aicon.liara.run>.
 
-The project ships as a **static export** (`output: "export"` in `next.config.ts`),
-so any static host works. The pipeline below targets Arvan's S3-compatible
-Object Storage with the right MIME types and cache headers per asset class.
+The project ships as a **static export** (`output: "export"` in `next.config.ts`)
+deployed to Liara's `static` platform from inside the build output (`out/`).
 
 ### One-off local deploy
 
 ```bash
-cp .env.example .env.local
-# fill in AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY from
-# https://panel.arvancloud.ir/storage/access-management
-set -a && source .env.local && set +a
-./scripts/deploy.sh
+liara login                  # one-time, opens browser
+./scripts/deploy.sh          # builds, then deploys
+SKIP_BUILD=1 ./scripts/deploy.sh   # skip rebuild, ship current out/
 ```
 
-`scripts/deploy.sh` runs `next build`, then uploads `out/` to the bucket with:
+Override the target app, region, or platform via env:
 
-- `_next/static/*` (js / css / woff2) → `Cache-Control: public, max-age=31536000, immutable`
-- `*.html` → `public, max-age=0, must-revalidate`
-- images / fonts / icons → `public, max-age=86400`
-- json / xml / txt → `public, max-age=300`
-- explicit `Content-Type` per extension (fixes mobile chunk-load errors)
-- prunes objects that no longer exist in `out/`
-
-Pass `SKIP_BUILD=1` to skip the build step and ship the current `out/`.
+```bash
+APP=aicon LOCATION=iran PLATFORM=static ./scripts/deploy.sh
+```
 
 ### CI deploy
 
 `.github/workflows/deploy.yml` runs on every push to `main`. To enable:
 
-1. Repo → Settings → Secrets and variables → Actions
-2. Add **secrets**:
-   - `ARVAN_ACCESS_KEY_ID`
-   - `ARVAN_SECRET_ACCESS_KEY`
-3. (Optional) Add **variables** to override the bucket / endpoint:
-   - `ARVAN_BUCKET`
-   - `ARVAN_ENDPOINT`
+1. Get an API token: <https://console.liara.ir/profile/api-tokens>
+2. Repo → Settings → Secrets and variables → Actions → **New secret**:
+   - `LIARA_API_TOKEN`
+3. (Optional) Add **variables** to override the app or region:
+   - `LIARA_APP`
+   - `LIARA_LOCATION`
 
-The workflow runs `next build`, deploys via `scripts/deploy.sh`, then
+The workflow runs `next build`, deploys `out/` via the Liara CLI, then
 smoke-tests `/`, `/fa/`, and `/en/` for `HTTP 200`.
 
 ### Static-export limitations (read before adding features)
